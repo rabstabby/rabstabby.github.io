@@ -89,7 +89,7 @@
       pool.setValueAnimated( my_pool_current_value );
 
       // Getting realtime! The function associated with the subscribe method will be executed every time there is an update to the datastream
-      xively.datastream.subscribe( feedID, datastreamID, function ( event , datastream_updated ) {
+      xively.datastream.subscribe( feedID, poolDatastreamID, function ( event , datastream_updated ) {
         // Display the current value from the updated datastream
         //tempGauge.setValueAnimated( my_pool_current_value );
         pool.setValueAnimated( my_pool_current_value );
@@ -107,7 +107,7 @@
       out.setValueAnimated( my_out_current_value );
 
       // Getting realtime! The function associated with the subscribe method will be executed every time there is an update to the datastream
-      xively.datastream.subscribe( feedID, datastreamID, function ( event , datastream_updated ) {
+      xively.datastream.subscribe( feedID, outDatastreamID, function ( event , datastream_updated ) {
         // Display the current value from the updated datastream
         pool.setValueAnimated( my_out_current_value );
       });
