@@ -11,119 +11,110 @@
 <script type='text/javascript' src='js/steelseries.js'></script>
 
 <script type="text/javascript" charset="UTF-8">
+  // Make sure the document is ready to be handled
+  $(document).ready(function($) {
+    // Set the Xively API key (https://xively.com/users/YOUR_USERNAME/keys)
+    xively.setKey( "SICanKXlrENyrCh3cYsdBZTjmoxH39kujPYRGnJGnZ7bVM8k" );
 
-// Make sure the document is ready to be handled
-    $(document).ready(function($) {
+    // Replace with your own values
+    var feedID        = "302281936",          // Feed ID (the last number on the URL on the feed page on Xively)
+    poolDatastreamID  = "PoolTemperatureF";       // Datastream ID
+    outDatastreamID   = "ExteriorTemperature";
 
-      // Set the Xively API key (https://xively.com/users/YOUR_USERNAME/keys)
-      xively.setKey( "SICanKXlrENyrCh3cYsdBZTjmoxH39kujPYRGnJGnZ7bVM8k" );
+    var valGradF = new steelseries.gradientWrapper( 65,
+                                                    90,
+                                                    [ 0, 0.33, 0.66, 0.85, 1],
+                                                    [ new steelseries.rgbaColor(0, 0, 200, 1),
+                                                      new steelseries.rgbaColor(0, 200, 0, 1),
+                                                      new steelseries.rgbaColor(200, 200, 0, 1),
+                                                      new steelseries.rgbaColor(200, 0, 0, 1),
+                                                      new steelseries.rgbaColor(200, 0, 0, 1) ]);
+    var valGradC = new steelseries.gradientWrapper( 10,
+                                                    40,
+                                                    [ 0, 0.33, 0.66, 0.85, 1],
+                                                    [ new steelseries.rgbaColor(0, 0, 200, 1),
+                                                      new steelseries.rgbaColor(0, 200, 0, 1),
+                                                      new steelseries.rgbaColor(200, 200, 0, 1),
+                                                      new steelseries.rgbaColor(200, 0, 0, 1),
+                                                      new steelseries.rgbaColor(200, 0, 0, 1) ]);
+    pool = new steelseries.LinearBargraph('poolThermometerCanvas', {
+             width: 140,
+             height: 320,
+             valueGradient: valGradF,
+             useValueGradient: true,
+             minValue: 65,
+             maxValue: 90,
+             gaugeType: steelseries.GaugeType.TYPE2,
+             titleString: 'Piscine',
+             unitString: '°F',
+             thresholdVisible: false,
+             lcdVisible: true,
+             minMeasuredValueVisible: true,
+             maxMeasuredValueVisible: true,
+             //MinMeasuredValue: 65,
+             //MaxMeasuredValue: 90
+    }); 
 
-      // Replace with your own values
-      var feedID        = "302281936",          // Feed ID (the last number on the URL on the feed page on Xively)
-          poolDatastreamID  = "PoolTemperatureF";       // Datastream ID
-          outDatastreamID   = "ExteriorTemperature";
-
-      var valGradF = new steelseries.gradientWrapper( 65,
-                                                      90,
-                                                      [ 0, 0.33, 0.66, 0.85, 1],
-                                                      [ new steelseries.rgbaColor(0, 0, 200, 1),
-                                                        new steelseries.rgbaColor(0, 200, 0, 1),
-                                                        new steelseries.rgbaColor(200, 200, 0, 1),
-                                                        new steelseries.rgbaColor(200, 0, 0, 1),
-                                                        new steelseries.rgbaColor(200, 0, 0, 1) ]);
-
-      var valGradC = new steelseries.gradientWrapper( 10,
-                                                      40,
-                                                      [ 0, 0.33, 0.66, 0.85, 1],
-                                                      [ new steelseries.rgbaColor(0, 0, 200, 1),
-                                                        new steelseries.rgbaColor(0, 200, 0, 1),
-                                                        new steelseries.rgbaColor(200, 200, 0, 1),
-                                                        new steelseries.rgbaColor(200, 0, 0, 1),
-                                                        new steelseries.rgbaColor(200, 0, 0, 1) ]);
-
-
-//      pool = new steelseries.Linear('poolThermometerCanvas', {
-      pool = new steelseries.LinearBargraph('poolThermometerCanvas', {
-                    width: 140,
-                    height: 320,
-                    valueGradient: valGradF,
-                    useValueGradient: true,
-                    minValue: 65,
-                    maxValue: 90,
-                    gaugeType: steelseries.GaugeType.TYPE2,
-                    titleString: 'Piscine',
-                    unitString: '°F',
-                    thresholdVisible: false,
-                    lcdVisible: true,
-                    minMeasuredValueVisible: true,
-                    maxMeasuredValueVisible: true,
-                    MinMeasuredValue: 65,
-                    MaxMeasuredValue: 90
-      }); 
-
-      out = new steelseries.LinearBargraph('outThermometerCanvas', {
-                    width: 140,
-                    height: 320,
-                    valueGradient: valGradC,
-                    useValueGradient: true,
-                    minValue: 10,
-                    maxValue: 40,
-                    gaugeType: steelseries.GaugeType.TYPE2,
-                    titleString: 'Extérieur',
-                    unitString: '°C',
-                    thresholdVisible: false,
-                    lcdVisible: true,
-                    minMeasuredValueVisible: true,
-                    maxMeasuredValueVisible: true,
-                    MaxMeasuredValue: 40,
-                    MinMeasuredValue: 10
-      });
+    out = new steelseries.LinearBargraph('outThermometerCanvas', {
+            width: 140,
+            height: 320,
+            valueGradient: valGradC,
+            useValueGradient: true,
+            minValue: 10,
+            maxValue: 40,
+            gaugeType: steelseries.GaugeType.TYPE2,
+            titleString: 'Extérieur',
+            unitString: '°C',
+            thresholdVisible: false,
+            lcdVisible: true,
+            minMeasuredValueVisible: true,
+            maxMeasuredValueVisible: true,
+            //MaxMeasuredValue: 40,
+            //MinMeasuredValue: 10
+    });
 
 
-      // Get datastream data from Xively
-      xively.datastream.get (feedID, poolDatastreamID, function ( datastream ) {
-        // WARNING: This code is only executed when we get a response back from Xively, it will likely execute after the rest your script
-        // NOTE: The variable "datastream" will contain all the Datastream information as an object. The structure of Datastream objects can be found at: 
-        // https://xively.com/dev/docs/api/quick_reference/api_resource_attributes/#datastream
+    // Get datastream data from Xively
+    xively.datastream.get (feedID, poolDatastreamID, function ( datastream ) {
+      // WARNING: This code is only executed when we get a response back from Xively, it will likely execute after the rest your script
+      // NOTE: The variable "datastream" will contain all the Datastream information as an object. The structure of Datastream objects can be found at: 
+      // https://xively.com/dev/docs/api/quick_reference/api_resource_attributes/#datastream
 
 
-        // Display the current value from the datastream
-        var my_pool_current_value = (datastream["current_value"]);
+      // Display the current value from the datastream
+      var my_pool_current_value = (datastream["current_value"]);
 
-        //alert("About to display [" + my_pool_current_value + "]");
+      //alert("About to display [" + my_pool_current_value + "]");
+      //tempGauge.setValueAnimated( my_pool_current_value );
+      pool.setValueAnimated( my_pool_current_value );
+
+      // Getting realtime! The function associated with the subscribe method will be executed every time there is an update to the datastream
+      xively.datastream.subscribe( feedID, datastreamID, function ( event , datastream_updated ) {
+        // Display the current value from the updated datastream
         //tempGauge.setValueAnimated( my_pool_current_value );
         pool.setValueAnimated( my_pool_current_value );
-
-        // Getting realtime! The function associated with the subscribe method will be executed every time there is an update to the datastream
-        xively.datastream.subscribe( feedID, datastreamID, function ( event , datastream_updated ) {
-          // Display the current value from the updated datastream
-          //tempGauge.setValueAnimated( my_pool_current_value );
-          pool.setValueAnimated( my_pool_current_value );
-        });
       });
-
-      xively.datastream.get (feedID, outDatastreamID, function ( datastream ) {
-        // WARNING: This code is only executed when we get a response back from Xively, it will likely execute after the rest your script
-        // NOTE: The variable "datastream" will contain all the Datastream information as an object. The structure of Datastream objects can be found at:
-        // https://xively.com/dev/docs/api/quick_reference/api_resource_attributes/#datastream
-
-
-        // Display the current value from the datastream
-        var my_out_current_value = (datastream["current_value"]);
-
-        //alert("About to display [" + my_pool_current_value + "]");
-        out.setValueAnimated( my_out_current_value );
-
-        // Getting realtime! The function associated with the subscribe method will be executed every time there is an update to the datastream
-        xively.datastream.subscribe( feedID, datastreamID, function ( event , datastream_updated ) {
-          // Display the current value from the updated datastream
-          pool.setValueAnimated( my_out_current_value );
-        });
-      });
-
-
-      // WARNING: Code here will continue executing while we get the datastream data from Xively, use the function associated with datastream.get to work with the data, when the request is complete
     });
+
+    xively.datastream.get (feedID, outDatastreamID, function ( datastream ) {
+      // WARNING: This code is only executed when we get a response back from Xively, it will likely execute after the rest your script
+      // NOTE: The variable "datastream" will contain all the Datastream information as an object. The structure of Datastream objects can be found at:
+      // https://xively.com/dev/docs/api/quick_reference/api_resource_attributes/#datastream
+
+      // Display the current value from the datastream
+      var my_out_current_value = (datastream["current_value"]);
+      //alert("About to display [" + my_pool_current_value + "]");
+      out.setValueAnimated( my_out_current_value );
+
+      // Getting realtime! The function associated with the subscribe method will be executed every time there is an update to the datastream
+      xively.datastream.subscribe( feedID, datastreamID, function ( event , datastream_updated ) {
+        // Display the current value from the updated datastream
+        pool.setValueAnimated( my_out_current_value );
+      });
+    });
+
+    // WARNING: Code here will continue executing while we get the datastream data from Xively, use the function associated with datastream.get to work with the data, when the request is complete
+  });
 
   function init(){
     //alert("here I am in init");
@@ -131,6 +122,110 @@
     //tempGauge.setValueAnimated(20.90);
   }
 
+  ///// Rickshaw /////
+  // Set your API key first
+  xively.setKey( "SICanKXlrENyrCh3cYsdBZTjmoxH39kujPYRGnJGnZ7bVM8k" );
+
+  var startOfYesterday = moment().subtract("day", 1).startOf('day');
+  var endOfYesterday = moment().subtract("hour", 3).startOf('day');
+  var PoolC_series = [];
+  var PoolF_series = [];
+  var OutC_series = [];
+  var OutF_series = [];
+
+  console.log(startOfYesterday);
+  console.log(endOfYesterday);
+
+  var query = {
+    start: startOfYesterday.toJSON(),
+    end: endOfYesterday.toJSON(),
+    interval: 120,
+    limit: 1000,
+  };
+
+  xively.datastream.history( "302281936", "PoolTemperature", query, loadData);
+  xively.datastream.history( "302281936", "ExteriorTemperature", query, loadData);
+  xively.datastream.history( "302281936", "PoolTemperatureF", query, loadData);
+  xively.datastream.history( "302281936", "ExteriorTemperatureF", query, loadData);
+
+  function loadData(data) {
+    //var unit = data.unit.label;
+    var filtedData = data.datapoints;
+    for (var i=0; i < filtedData.length; i++ ) {
+      var date = moment(filtedData[i].at);
+      var value = parseInt(filtedData[i].value);
+      switch (data.id) {
+        case "PoolTemperature":
+          PoolC_series[i] = {x: date.unix(), y: value};
+          if (PoolC_series.length == OutC_series.length) {
+            drawgraphifready(PoolC_series , OutC_series , "#chartC");
+          }
+          break;
+        case "PoolTemperatureF":
+          PoolF_series[i] = {x: date.unix(), y: value};
+          if (PoolF_series.length == OutF_series.length) {
+            drawgraphifready(PoolF_series , OutF_series , "#chartF");
+          }
+          break;
+        case "ExteriorTemperature":
+          OutC_series[i] = {x: date.unix(), y: value};i
+          if (PoolC_series.length == OutC_series.length) {
+            drawgraphifready(PoolC_series , OutC_series , "#chartC");
+          }
+          break;
+        case "ExteriorTemperatureF":
+          OutF_series[i] = {x: date.unix(), y: value};
+          if (PoolF_series.length == OutF_series.length) {
+            drawgraphifready(PoolF_series , OutF_series , "#chartF");
+          }
+          break;
+        default:
+          console.log("default")
+      }
+    }
+  }
+
+  function drawgraphifready(serie1, serie2, anchor) {
+    console.log("Entered drawgraphifready: " + serie1.length + " - " + serie2.length);
+    if ((serie1.length > 0) && (serie2.length > 0)){
+      var graph = new Rickshaw.Graph( {
+        element: document.querySelector(anchor),
+        width: 640,
+        height: 400,
+        renderer: 'line',
+  //      interpolation: 'basis',
+        series: [
+          {
+            data: serie1,
+            color: '#6060c0',
+            name: "Piscine"
+          },
+          {
+            data: serie2,
+            color: '#FF0000',
+            name: "Exterieur"
+          },
+        ]
+      } );
+
+      graph.render();
+
+      var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+        graph: graph
+      } );
+
+      var axes = new Rickshaw.Graph.Axis.Time( {
+        graph: graph
+      });
+      axes.render();
+
+      var yAxis = new Rickshaw.Graph.Axis.Y({
+        graph: graph
+      });
+
+      yAxis.render();
+    }
+  }
 </script>
 
 </head>
@@ -165,8 +260,30 @@
     <td>
 <table id="graph">
   <tr>
+    <td>
+      <div id="chart_container" >
+        <div id="chartC"></div>
+        <div id="legend_container">
+          <div id="smoother" title="Smoothing"></div>
+          <div id="legend"></div>
+        </div>
+        <div id="slider"></div>
+      </div>
+    </td>
+    <td>
+      <div id="chart_container" >
+        <div id="chartF"></div>
+        <div id="legend_container">
+          <div id="smoother" title="Smoothing"></div>
+          <div id="legend"></div>
+        </div>
+        <div id="slider"></div>
+      </div>
+    </td>
+<!--
     <td><a href="temp_combined_c_day.png"><img src="temp_combined_c_day.png"></a></td>
     <td><a href="temp_combined_f_day.png"><img src="temp_combined_f_day.png"></a></td>
+-->
   </tr>
 </table>
     </td>
