@@ -147,6 +147,10 @@
   var PoolF_series = [];
   var OutC_series = [];
   var OutF_series = [];
+  var PoolC_seriesW = [];
+  var PoolF_seriesW = [];
+  var OutC_seriesW = [];
+  var OutF_seriesW = [];
 
   console.log(startDaily);
   console.log(now);
@@ -220,27 +224,27 @@
       var value = parseInt(filtedData[i].value);
       switch (data.id) {
         case "PoolTemperature":
-          PoolC_series[i] = {x: date.unix(), y: value};
-          if (PoolC_series.length == OutC_series.length) {
-            drawgraphifready(PoolC_series , OutC_series , "#chartCW");
+          PoolC_seriesW[i] = {x: date.unix(), y: value};
+          if (PoolC_seriesW.length == OutC_seriesW.length) {
+            drawgraphifready(PoolC_seriesW , OutC_seriesW , "#chartCW");
           }
           break;
         case "PoolTemperatureF":
-          PoolF_series[i] = {x: date.unix(), y: value};
-          if (PoolF_series.length == OutF_series.length) {
-            drawgraphifready(PoolF_series , OutF_series , "#chartFW");
+          PoolF_seriesW[i] = {x: date.unix(), y: value};
+          if (PoolF_seriesW.length == OutF_seriesW.length) {
+            drawgraphifready(PoolF_seriesW , OutF_seriesW , "#chartFW");
           }
           break;
         case "ExteriorTemperature":
-          OutC_series[i] = {x: date.unix(), y: value};i
-          if (PoolC_series.length == OutC_series.length) {
-            drawgraphifready(PoolC_series , OutC_series , "#chartCW");
+          OutC_seriesW[i] = {x: date.unix(), y: value};i
+          if (PoolC_seriesW.length == OutC_seriesW.length) {
+            drawgraphifready(PoolC_seriesW , OutC_seriesW , "#chartCW");
           }
           break;
         case "ExteriorTemperatureF":
-          OutF_series[i] = {x: date.unix(), y: value};
-          if (PoolF_series.length == OutF_series.length) {
-            drawgraphifready(PoolF_series , OutF_series , "#chartFW");
+          OutF_seriesW[i] = {x: date.unix(), y: value};
+          if (PoolF_seriesW.length == OutF_seriesW.length) {
+            drawgraphifready(PoolF_seriesW , OutF_seriesW , "#chartFW");
           }
           break;
         default:
