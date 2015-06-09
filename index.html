@@ -158,6 +158,13 @@
     limit: 1000,
   };
 
+  var queryWeekly = {
+    start: startWeekly.toJSON(),
+    end: now.toJSON(),
+    interval: 120,
+    limit: 1000,
+  };
+
   xively.datastream.history( "302281936", "PoolTemperature", queryDaily, loadData);
   xively.datastream.history( "302281936", "ExteriorTemperature", queryDaily, loadData);
   xively.datastream.history( "302281936", "PoolTemperatureF", queryDaily, loadData);
@@ -199,6 +206,49 @@
       }
     }
   }
+
+  xively.datastream.history( "302281936", "PoolTemperature", queryWeekly, loadDataW);
+  xively.datastream.history( "302281936", "ExteriorTemperature", queryWeekly, loadDataW);
+  xively.datastream.history( "302281936", "PoolTemperatureF", queryWeekly, loadDataW);
+  xively.datastream.history( "302281936", "ExteriorTemperatureF", queryWeekly, loadDataW);
+
+  function loadDataW(data) {
+    //var unit = data.unit.label;
+    var filtedData = data.datapoints;
+    for (var i=0; i < filtedData.length; i++ ) {
+      var date = moment(filtedData[i].at);
+      var value = parseInt(filtedData[i].value);
+      switch (data.id) {
+        case "PoolTemperature":
+          PoolC_series[i] = {x: date.unix(), y: value};
+          if (PoolC_series.length == OutC_series.length) {
+            drawgraphifready(PoolC_series , OutC_series , "#chartCW");
+          }
+          break;
+        case "PoolTemperatureF":
+          PoolF_series[i] = {x: date.unix(), y: value};
+          if (PoolF_series.length == OutF_series.length) {
+            drawgraphifready(PoolF_series , OutF_series , "#chartFW");
+          }
+          break;
+        case "ExteriorTemperature":
+          OutC_series[i] = {x: date.unix(), y: value};i
+          if (PoolC_series.length == OutC_series.length) {
+            drawgraphifready(PoolC_series , OutC_series , "#chartCW");
+          }
+          break;
+        case "ExteriorTemperatureF":
+          OutF_series[i] = {x: date.unix(), y: value};
+          if (PoolF_series.length == OutF_series.length) {
+            drawgraphifready(PoolF_series , OutF_series , "#chartFW");
+          }
+          break;
+        default:
+          console.log("default")
+      }
+    }
+  }
+
 
   function drawgraphifready(serie1, serie2, anchor) {
     console.log("Entered drawgraphifready: " + serie1.length + " - " + serie2.length);
@@ -311,8 +361,31 @@
     <td>
 <table id="graph">
   <tr>
+  <tr>
+    <td>
+      <div id="chart_container" >
+        <div id="chartCW"></div>
+        <div id="legend_container">
+          <div id="smoother" title="Smoothing"></div>
+          <div id="legend"></div>
+        </div>
+        <div id="slider"></div>
+      </div>
+    </td>
+    <td>
+      <div id="chart_container" >
+        <div id="chartFw"></div>
+        <div id="legend_container">
+          <div id="smoother" title="Smoothing"></div>
+          <div id="legend"></div>
+        </div>
+        <div id="slider"></div>
+      </div>
+    </td>
+<!--
     <td><a href="temp_combined_c_week.png"><img src="temp_combined_c_week.png"></a></td>
     <td><a href="temp_combined_f_week.png"><img src="temp_combined_f_week.png"></a></td>
+-->
   </tr>
 </table>
     </td>
