@@ -136,10 +136,11 @@
   // Set your API key first
   xively.setKey( "SICanKXlrENyrCh3cYsdBZTjmoxH39kujPYRGnJGnZ7bVM8k" );
 
-  var now = moment().startOf('day');
-
-  var startOfYesterday = moment().subtract("day", 1).startOf('day');
-  var endOfYesterday = moment().subtract("hour", 3).startOf('day');
+//  var startOfYesterday = moment().subtract("day", 1).startOf('day');
+//  var endOfYesterday = moment().subtract("hour", 3).startOf('day');
+  var startDaily = moment().substract("day", 1).fromNow();
+  var startWeekly = moment().substract("week", 1).fromNow();
+  var now = moment();
   var PoolC_series = [];
   var PoolF_series = [];
   var OutC_series = [];
@@ -148,17 +149,17 @@
   console.log(startOfYesterday);
   console.log(endOfYesterday);
 
-  var query = {
-    start: startOfYesterday.toJSON(),
-    end: endOfYesterday.toJSON(),
+  var queryDaily = {
+    start: startDaily.toJSON(),
+    end: now.toJSON(),
     interval: 120,
     limit: 1000,
   };
 
-  xively.datastream.history( "302281936", "PoolTemperature", query, loadData);
-  xively.datastream.history( "302281936", "ExteriorTemperature", query, loadData);
-  xively.datastream.history( "302281936", "PoolTemperatureF", query, loadData);
-  xively.datastream.history( "302281936", "ExteriorTemperatureF", query, loadData);
+  xively.datastream.history( "302281936", "PoolTemperature", queryDaily, loadData);
+  xively.datastream.history( "302281936", "ExteriorTemperature", queryDaily, loadData);
+  xively.datastream.history( "302281936", "PoolTemperatureF", queryDaily, loadData);
+  xively.datastream.history( "302281936", "ExteriorTemperatureF", queryDaily, loadData);
 
   function loadData(data) {
     //var unit = data.unit.label;
