@@ -136,8 +136,10 @@
   // Set your API key first
   xively.setKey( "SICanKXlrENyrCh3cYsdBZTjmoxH39kujPYRGnJGnZ7bVM8k" );
 
-  var startOfYesterday = moment().subtract("day", 1).startOf('day');
-  var endOfYesterday = moment().subtract("hour", 3).startOf('day');
+//  var startOfYesterday = moment().subtract("day", 1).startOf('day');
+// var endOfYesterday = moment().subtract("hour", 3).startOf('day');
+  var startOfYesterday = moment().subtract("day", 1);
+  var endOfYesterday = moment();
 //  var startDaily = moment().subtract("day", 1);
 //  var startWeekly = moment().subtract("day", 7);
   var now = moment();
