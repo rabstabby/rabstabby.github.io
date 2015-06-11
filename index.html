@@ -21,6 +21,7 @@
 <script src="vendor/moment.min.js"></script>
 
 <script src="http://code.shutterstock.com/rickshaw/src/js/Rickshaw.Fixtures.Time.Local.js"></script>
+<script src="http://code.shutterstock.com/rickshaw/src/js/Rickshaw.Graph.Smoother.js"></script>
 
 <script type="text/javascript" charset="UTF-8">
   // Make sure the document is ready to be handled
@@ -285,6 +286,11 @@
 
       var hoverDetail = new Rickshaw.Graph.HoverDetail( {
         graph: graph
+      } );
+
+      var smoother = new Rickshaw.Graph.Smoother( {
+	graph: graph,
+	element: document.querySelector('#smoother')
       } );
 
       var ticksTreatment = 'glow';
