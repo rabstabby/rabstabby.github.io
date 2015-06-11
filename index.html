@@ -200,7 +200,7 @@
           }
           break;
         case "ExteriorTemperature":
-          OutC_series[i] = {x: date.unix(), y: value};i
+          OutC_series[i] = {x: date.unix(), y: value};
           if (PoolC_series.length == OutC_series.length) {
             drawgraphifready(PoolC_series , OutC_series , "#chartC");
           }
