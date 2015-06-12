@@ -185,7 +185,7 @@
     var filtedData = data.datapoints;
     for (var i=0; i < filtedData.length; i++ ) {
       var date = moment(filtedData[i].at);
-      var value = parseInt(filtedData[i].value);
+      var value = parseFloat(filtedData[i].value);
       switch (data.id) {
         case "PoolTemperature":
           PoolC_series[i] = {x: date.unix(), y: value};
@@ -228,7 +228,7 @@
     var filtedData = data.datapoints;
     for (var i=0; i < filtedData.length; i++ ) {
       var date = moment(filtedData[i].at);
-      var value = parseInt(filtedData[i].value);
+      var value = parseFloat(filtedData[i].value);
       switch (data.id) {
         case "PoolTemperature":
           PoolC_seriesW[i] = {x: date.unix(), y: value};
