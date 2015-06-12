@@ -190,25 +190,25 @@
         case "PoolTemperature":
           PoolC_series[i] = {x: date.unix(), y: value};
           if (PoolC_series.length == OutC_series.length) {
-            drawgraphifready(PoolC_series , OutC_series , "#chartC");
+            drawgraphifready(PoolC_series , OutC_series , data.min_value , data.max_value , "#chartC");
           }
           break;
         case "PoolTemperatureF":
           PoolF_series[i] = {x: date.unix(), y: value};
           if (PoolF_series.length == OutF_series.length) {
-            drawgraphifready(PoolF_series , OutF_series , "#chartF");
+            drawgraphifready(PoolF_series , OutF_series , data.min_value , data.max_value , "#chartF");
           }
           break;
         case "ExteriorTemperature":
           OutC_series[i] = {x: date.unix(), y: value};
           if (PoolC_series.length == OutC_series.length) {
-            drawgraphifready(PoolC_series , OutC_series , "#chartC");
+            drawgraphifready(PoolC_series , OutC_series , data.min_value , data.max_value , "#chartC");
           }
           break;
         case "ExteriorTemperatureF":
           OutF_series[i] = {x: date.unix(), y: value};
           if (PoolF_series.length == OutF_series.length) {
-            drawgraphifready(PoolF_series , OutF_series , "#chartF");
+            drawgraphifready(PoolF_series , OutF_series , data.min_value , data.max_value , "#chartF");
           }
           break;
         default:
@@ -261,13 +261,15 @@
   }
 */
 
-  function drawgraphifready(serie1, serie2, anchor) {
+  function drawgraphifready(serie1, serie2, min_y, max_y, anchor) {
     console.log("Entered drawgraphifready: " + serie1.length + " - " + serie2.length);
     if ((serie1.length > 0) && (serie2.length > 0)){
       var graph = new Rickshaw.Graph( {
         element: document.querySelector(anchor),
         width: 640,
         height: 400,
+        min: min_y,
+        max: max_y,
         renderer: 'line',
   //      interpolation: 'basis',
         series: [
