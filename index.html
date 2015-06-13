@@ -168,19 +168,19 @@
     limit: 1000,
   };
 
-/*
+
   var queryWeekly = {
     start: startWeekly.toJSON(),
     end: now.toJSON(),
     interval: 300,
     limit: 1000,
   };
-*/
 
-  xively.datastream.history( "302281936", "PoolTemperature", queryDaily, loadData);
-  xively.datastream.history( "302281936", "ExteriorTemperature", queryDaily, loadData);
-  xively.datastream.history( "302281936", "PoolTemperatureF", queryDaily, loadData);
-  xively.datastream.history( "302281936", "ExteriorTemperatureF", queryDaily, loadData);
+
+  xively.datastream.history( "302281936", "PoolTemperature", queryWeekly, loadData);
+  xively.datastream.history( "302281936", "ExteriorTemperature", queryWeekly, loadData);
+  xively.datastream.history( "302281936", "PoolTemperatureF", queryWeekly, loadData);
+  xively.datastream.history( "302281936", "ExteriorTemperatureF", queryWeekly, loadData);
 
   function loadData(data) {
     //var unit = data.unit.label;
