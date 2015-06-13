@@ -144,9 +144,9 @@
 //  var startOfYesterday = moment().subtract("day", 1).startOf('day');
 // var endOfYesterday = moment().subtract("hour", 3).startOf('day');
   var startOfYesterday = moment().subtract("day", 1);
-  var endOfYesterday = moment();
+//  var endOfYesterday = moment();
 //  var startDaily = moment().subtract("day", 1);
-//  var startWeekly = moment().subtract("day", 7);
+  var startWeekly = moment().subtract("day", 7);
   var now = moment();
   var PoolC_series = [];
   var PoolF_series = [];
@@ -157,24 +157,25 @@
   var OutC_seriesW = [];
   var OutF_seriesW = [];
 
+  console.log(now);
   console.log(startOfYesterday);
-  console.log(endOfYesterday);
+  console.log(startWeekly);
 
   var queryDaily = {
     start: startOfYesterday.toJSON(),
-    end: endOfYesterday.toJSON(),
+    end: now.toJSON(),
     interval: 300,
     limit: 1000,
   };
 
-/*
+
   var queryWeekly = {
     start: startWeekly.toJSON(),
     end: now.toJSON(),
-    interval: 120,
+    interval: 300,
     limit: 1000,
   };
-*/
+
   xively.datastream.history( "302281936", "PoolTemperature", queryDaily, loadData);
   xively.datastream.history( "302281936", "ExteriorTemperature", queryDaily, loadData);
   xively.datastream.history( "302281936", "PoolTemperatureF", queryDaily, loadData);
@@ -217,7 +218,7 @@
     }
   }
 
-/*
+
   xively.datastream.history( "302281936", "PoolTemperature", queryWeekly, loadDataW);
   xively.datastream.history( "302281936", "ExteriorTemperature", queryWeekly, loadDataW);
   xively.datastream.history( "302281936", "PoolTemperatureF", queryWeekly, loadDataW);
@@ -233,25 +234,25 @@
         case "PoolTemperature":
           PoolC_seriesW[i] = {x: date.unix(), y: value};
           if (PoolC_seriesW.length == OutC_seriesW.length) {
-            drawgraphifready(PoolC_seriesW , OutC_seriesW , "#chartCW");
+            drawgraphifready(PoolC_seriesW , OutC_seriesW , data.min_value , data.max_value  , "#chartCW");
           }
           break;
         case "PoolTemperatureF":
           PoolF_seriesW[i] = {x: date.unix(), y: value};
           if (PoolF_seriesW.length == OutF_seriesW.length) {
-            drawgraphifready(PoolF_seriesW , OutF_seriesW , "#chartFW");
+            drawgraphifready(PoolF_seriesW , OutF_seriesW , data.min_value , data.max_value  , "#chartFW");
           }
           break;
         case "ExteriorTemperature":
-          OutC_seriesW[i] = {x: date.unix(), y: value};i
+          OutC_seriesW[i] = {x: date.unix(), y: value};
           if (PoolC_seriesW.length == OutC_seriesW.length) {
-            drawgraphifready(PoolC_seriesW , OutC_seriesW , "#chartCW");
+            drawgraphifready(PoolC_seriesW , OutC_seriesW , data.min_value , data.max_value  , "#chartCW");
           }
           break;
         case "ExteriorTemperatureF":
           OutF_seriesW[i] = {x: date.unix(), y: value};
           if (PoolF_seriesW.length == OutF_seriesW.length) {
-            drawgraphifready(PoolF_seriesW , OutF_seriesW , "#chartFW");
+            drawgraphifready(PoolF_seriesW , OutF_seriesW , data.min_value , data.max_value  , "#chartFW");
           }
           break;
         default:
@@ -259,7 +260,7 @@
       }
     }
   }
-*/
+
 
   function drawgraphifready(serie1, serie2, min_y, max_y, anchor) {
     console.log("Entered drawgraphifready: " + serie1.length + " - " + serie2.length + " - " + min_y + " - " + max_y);
