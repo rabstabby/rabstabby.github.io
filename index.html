@@ -162,10 +162,12 @@
   console.log(startWeekly);
 
   var queryDaily = {
-    start: startOfYesterday.toJSON(),
+    //start: startOfYesterday.toJSON(),
+    start: startiWeekly.toJSON(),
     end: now.toJSON(),
     interval: 300,
-    limit: 288,
+    //limit: 288,
+    limit: 6912,
   };
 
 /*
