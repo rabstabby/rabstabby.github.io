@@ -308,8 +308,8 @@
     if ((serie1.length > 0) && (serie2.length > 0)){
       var graph = new Rickshaw.Graph( {
         element: document.querySelector(anchor),
-        width: 640,
-        height: 400,
+        width: 750,
+        height: 320,
         renderer: 'line',
         min: min_val - (min_val % 5),
         max: max_val + (5 - (max_val % 5)),
@@ -371,11 +371,31 @@
     <td>
 <table id="graph">
   <tr>
-    <td><div id="div_temp_chart_cm"> <img src="https://api.xively.com/v2/feeds/302281936/datastreams/PoolTemperatureF.png?width=750&height=320&colour=%23f15a24&duration=24hours&show_axis_labels=true&detailed_grid=true&timezone=America/Montreal" ></div></td>
+    <!--<td><div id="div_temp_chart_cm"> <img src="https://api.xively.com/v2/feeds/302281936/datastreams/PoolTemperatureF.png?width=750&height=320&colour=%23f15a24&duration=24hours&show_axis_labels=true&detailed_grid=true&timezone=America/Montreal" ></div></td>-->
+    <td>
+      <div id="chart_container" >
+        <div id="chartF"></div>
+        <div id="legend_container">
+          <div id="smoother" title="Smoothing"></div>
+          <div id="legend"></div>
+        </div>
+      </div>
+    </td>
     <td><canvas id=poolThermometerCanvas width=200 height=200>No canvas in your browser...sorry...</canvas></td>
   </tr>
   <tr>
-    <td><img src="https://api.xively.com/v2/feeds/302281936/datastreams/ExteriorTemperature.png?width=750&height=320&colour=%23f15a24&duration=24hours&show_axis_labels=true&detailed_grid=true&timezone=America/Montreal" ></td>
+    <!--<td><img src="https://api.xively.com/v2/feeds/302281936/datastreams/ExteriorTemperature.png?width=750&height=320&colour=%23f15a24&duration=24hours&show_axis_labels=true&detailed_grid=true&timezone=America/Montreal" ></td>-->
+    <td>
+      <div id="chart_container" >
+        <div id="chartC"></div>
+          <div id="legend_container">
+          <div id="timeline"></div>
+          <div id="preview"></div>
+          <div id="smoother" title="Smoothing"></div>
+          <div id="legend"></div>
+        </div>
+      </div>
+    </td>
     <td><canvas id=outThermometerCanvas width=200 height=200>No canvas in your browser...sorry...</canvas></td>
   </tr>
 </table>
@@ -383,6 +403,7 @@
   </tr>
 </table>
 
+<!--
 <h2>La derni&egrave;re journ&eacute;e</h2>
 <table width="70%">
   <tr>
@@ -412,10 +433,6 @@
         </div>
       </div>
     </td>
-<!--
-    <td><a href="temp_combined_c_day.png"><img src="temp_combined_c_day.png"></a></td>
-    <td><a href="temp_combined_f_day.png"><img src="temp_combined_f_day.png"></a></td>
--->
   </tr>
 </table>
     </td>
@@ -447,15 +464,13 @@
         </div>
       </div>
     </td>
-<!--
-    <td><a href="temp_combined_c_week.png"><img src="temp_combined_c_week.png"></a></td>
-    <td><a href="temp_combined_f_week.png"><img src="temp_combined_f_week.png"></a></td>
--->
   </tr>
 </table>
     </td>
   </tr>
 </table>
+
+-->
 
 </body>
 </html>
