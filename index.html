@@ -150,9 +150,18 @@
   var startWeekly = moment().subtract("day", 4); 
   var now = moment();
   var PoolC_series = [];
+  var PoolC_serie_min = 1000;
+  var PoolC_serie_max = -1000;
   var PoolF_series = [];
+  var PoolF_serie_min = 1000;
+  var PoolF_serie_max = -1000;
   var OutC_series = [];
+  var OutC_serie_min = 1000;
+  var OutC_serie_max = -1000;
   var OutF_series = [];
+  var OutF_serie_min = 1000;
+  var OutF_serie_max = -1000;
+
   var PoolC_seriesW = [];
   var PoolF_seriesW = [];
   var OutC_seriesW = [];
@@ -194,12 +203,20 @@
       switch (data.id) {
         case "PoolTemperature":
           PoolC_series[i] = {x: date.unix(), y: value};
+          if (value < PoolC_serie_min) {
+            PoolC_serie_min = value;
+            PoolF_serie_min = ((value * (9/5)) + 32);
+          }
+          if (value > PoolC_serie_max) {
+            PoolC_serie_max = value;
+            PoolF_serie_max = ((value * (9/5)) + 32);
+          }
           PoolF_series[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
           if (PoolC_series.length == OutC_series.length) {
-            drawgraphifready(PoolC_series , OutC_series , "#chartC");
+            drawgraphifready(PoolC_series , OutC_series , (PoolC_serie_min < OutC_serie_min)?PoolC_serie_min:OutC_serie_min, (PoolC_serie_max > OutC_serie_max)?PoolC_serie_max:OutC_serie_max , "#chartC");
           }
           if (PoolF_series.length == OutF_series.length) {
-            drawgraphifready(PoolF_series , OutF_series , "#chartF");
+            drawgraphifready(PoolF_series , OutF_series , (PoolF_serie_min < OutF_serie_min)?PoolF_serie_min:OutF_serie_min, (PoolF_serie_max > OutF_serie_max)?PoolF_serie_max:OutF_serie_max ,"#chartF");
           }
           break;
 /*
@@ -212,12 +229,20 @@
 */
         case "ExteriorTemperature":
           OutC_series[i] = {x: date.unix(), y: value};
+          if (value < OutC_serie_min) {
+            OutC_serie_min = value;
+            OutF_serie_min = ((value * (9/5)) + 32);
+          }
+          if (value > OutC_serie_max) {
+            OutC_serie_max = value;
+            OutF_serie_max = ((value * (9/5)) + 32);
+          }
           OutF_series[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
           if (PoolC_series.length == OutC_series.length) {
-            drawgraphifready(PoolC_series , OutC_series , "#chartC");
+            drawgraphifready(PoolC_series , OutC_series , (PoolC_serie_min < OutC_serie_min)?PoolC_serie_min:OutC_serie_min, (PoolC_serie_max > OutC_serie_max)?PoolC_serie_max:OutC_serie_max , "#chartC");
           }
           if (PoolF_series.length == OutF_series.length) {
-            drawgraphifready(PoolF_series , OutF_series , "#chartF");
+            drawgraphifready(PoolF_series , OutF_series , (PoolF_serie_min < OutF_serie_min)?PoolF_serie_min:OutF_serie_min, (PoolF_serie_max > OutF_serie_max)?PoolF_serie_max:OutF_serie_max , "#chartF");
           }
           break;
 /*
@@ -278,7 +303,7 @@
   }
 */
 
-  function drawgraphifready(serie1, serie2, anchor) {
+  function drawgraphifready(serie1, serie2, min_val, max_val, anchor) {
     console.log("Entered drawgraphifready: " + serie1.length + " - " + serie2.length);
     if ((serie1.length > 0) && (serie2.length > 0)){
       var graph = new Rickshaw.Graph( {
@@ -286,6 +311,8 @@
         width: 640,
         height: 400,
         renderer: 'line',
+        min = min_val;
+        max = max_val;
   //      interpolation: 'basis',
         series: [
           {
