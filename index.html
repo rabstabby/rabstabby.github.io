@@ -182,8 +182,8 @@
 
   xively.datastream.history( "302281936", "PoolTemperature", queryDaily, loadData);
   xively.datastream.history( "302281936", "ExteriorTemperature", queryDaily, loadData);
-  xively.datastream.history( "302281936", "PoolTemperatureF", queryDaily, loadData);
-  xively.datastream.history( "302281936", "ExteriorTemperatureF", queryDaily, loadData);
+//  xively.datastream.history( "302281936", "PoolTemperatureF", queryDaily, loadData);
+//  xively.datastream.history( "302281936", "ExteriorTemperatureF", queryDaily, loadData);
 
   function loadData(data) {
     //var unit = data.unit.label;
@@ -194,35 +194,47 @@
       switch (data.id) {
         case "PoolTemperature":
           PoolC_series[i] = {x: date.unix(), y: value};
+          PoolF_series[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
           if (PoolC_series.length == OutC_series.length) {
             drawgraphifready(PoolC_series , OutC_series , "#chartC");
           }
+          if (PoolF_series.length == OutF_series.length) {
+            drawgraphifready(PoolF_series , OutF_series , "#chartF");
+          }
           break;
+/*
         case "PoolTemperatureF":
           PoolF_series[i] = {x: date.unix(), y: value};
           if (PoolF_series.length == OutF_series.length) {
             drawgraphifready(PoolF_series , OutF_series , "#chartF");
           }
           break;
+*/
         case "ExteriorTemperature":
           OutC_series[i] = {x: date.unix(), y: value};
+          OutF_series[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
           if (PoolC_series.length == OutC_series.length) {
             drawgraphifready(PoolC_series , OutC_series , "#chartC");
           }
+          if (PoolF_series.length == OutF_series.length) {
+            drawgraphifready(PoolF_series , OutF_series , "#chartF");
+          }
           break;
+/*
         case "ExteriorTemperatureF":
           OutF_series[i] = {x: date.unix(), y: value};
           if (PoolF_series.length == OutF_series.length) {
             drawgraphifready(PoolF_series , OutF_series , "#chartF");
           }
           break;
+*/
         default:
           console.log("default")
       }
     }
   }
 
-
+/*
   xively.datastream.history( "302281936", "PoolTemperature", queryWeekly, loadDataW);
   xively.datastream.history( "302281936", "ExteriorTemperature", queryWeekly, loadDataW);
   xively.datastream.history( "302281936", "PoolTemperatureF", queryWeekly, loadDataW);
@@ -264,7 +276,7 @@
       }
     }
   }
-
+*/
 
   function drawgraphifready(serie1, serie2, anchor) {
     console.log("Entered drawgraphifready: " + serie1.length + " - " + serie2.length);
