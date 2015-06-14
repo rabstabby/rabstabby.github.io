@@ -311,8 +311,8 @@
         width: 640,
         height: 400,
         renderer: 'line',
-        min: min_val,
-        max: max_val,
+        min: min_val - (min_val % 5),
+        max: max_val + (5 - (max_val % 5)),
   //      interpolation: 'basis',
         series: [
           {
