@@ -146,7 +146,8 @@
   var startOfYesterday = moment().subtract("day", 1);
 //  var endOfYesterday = moment();
 //  var startDaily = moment().subtract("day", 1);
-  var startWeekly = moment().subtract("day", 4);
+  // it seams there is a limit of <5 days for and historical query
+  var startWeekly = moment().subtract("day", 4); 
   var now = moment();
   var PoolC_series = [];
   var PoolF_series = [];
@@ -162,22 +163,22 @@
   console.log(startWeekly);
 
   var queryDaily = {
-    //start: startOfYesterday.toJSON(),
-    start: startWeekly.toJSON(),
+    start: startOfYesterday.toJSON(),
+    //start: startWeekly.toJSON(),
     end: now.toJSON(),
     interval: 300,
     //limit: 288,
     limit: 1000,
   };
 
-/*
+
   var queryWeekly = {
     start: startWeekly.toJSON(),
     end: now.toJSON(),
     interval: 300,
     limit: 5000,
   };
-*/
+
 
   xively.datastream.history( "302281936", "PoolTemperature", queryDaily, loadData);
   xively.datastream.history( "302281936", "ExteriorTemperature", queryDaily, loadData);
@@ -221,7 +222,7 @@
     }
   }
 
-/*
+
   xively.datastream.history( "302281936", "PoolTemperature", queryWeekly, loadDataW);
   xively.datastream.history( "302281936", "ExteriorTemperature", queryWeekly, loadDataW);
   xively.datastream.history( "302281936", "PoolTemperatureF", queryWeekly, loadDataW);
@@ -263,7 +264,7 @@
       }
     }
   }
-*/
+
 
   function drawgraphifready(serie1, serie2, anchor) {
     console.log("Entered drawgraphifready: " + serie1.length + " - " + serie2.length);
