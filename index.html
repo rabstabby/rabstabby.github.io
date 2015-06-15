@@ -29,6 +29,8 @@
 
   // Make sure the document is ready to be handled
   $(document).ready(function($) {
+
+/*
     // Set the Xively API key (https://xively.com/users/YOUR_USERNAME/keys)
 
     xively.setKey( "SICanKXlrENyrCh3cYsdBZTjmoxH39kujPYRGnJGnZ7bVM8k" );
@@ -90,7 +92,6 @@
             //MinMeasuredValue: 10
     });
 
-
     // Get datastream data from Xively
     xively.datastream.get (feedID, poolDatastreamID, function ( datastream ) {
       // WARNING: This code is only executed when we get a response back from Xively, it will likely execute after the rest your script
@@ -132,14 +133,7 @@
 
     // WARNING: Code here will continue executing while we get the datastream data from Xively, use the function associated with datastream.get to work with the data, when the request is complete
   });
-
-
-  function init(){
-    //alert("here I am in init");
-
-    //tempGauge.setValueAnimated(20.90);
-  }
-
+*/
   ///// Rickshaw /////
   // Set your API key first
   xively.setKey( "SICanKXlrENyrCh3cYsdBZTjmoxH39kujPYRGnJGnZ7bVM8k" );
@@ -166,7 +160,6 @@
   var OutC_seriesW = [];
   var OutF_seriesW = [];
 
-/*
   var valGradF = new steelseries.gradientWrapper( 65,
                                                   90,
                                                   [ 0, 0.33, 0.66, 0.85, 1],
@@ -218,7 +211,7 @@
           //MaxMeasuredValue: 40,
           //MinMeasuredValue: 10
     });
-*/
+
   console.log(now);
   console.log(startOfYesterday);
   console.log(startWeekly);
@@ -263,6 +256,7 @@
           }
           if (PoolF_series.length == OutF_series.length) {
             //PoolF_series.push({x: moment(data.at).unix(), y: ((parseFloat(data.current_value) * (9/5)) + 32)});
+            pool.setValueAnimated( (parseFloat(data.current_value) * (9/5)) + 32 );
             drawgraphifready(PoolF_series , OutF_series , (PoolF_serie_min < OutF_serie_min)?PoolF_serie_min:OutF_serie_min, (PoolF_serie_max > OutF_serie_max)?PoolF_serie_max:OutF_serie_max ,"#chartF");
           }
           break;
@@ -279,6 +273,7 @@
           OutF_series[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
           if (OutC_series.length == PoolC_series.length) {
             //OutC_series.push({x: moment(data.at).unix(), y:parseFloat(data.current_value)});
+            out.setValueAnimated( parseFloat(data.current_value) );
             drawgraphifready(PoolC_series , OutC_series , (PoolC_serie_min < OutC_serie_min)?PoolC_serie_min:OutC_serie_min, (PoolC_serie_max > OutC_serie_max)?PoolC_serie_max:OutC_serie_max , "#chartC");
           }
           if (OutF_series.length == PoolF_series.length) {
@@ -388,6 +383,8 @@
       yAxis.render();
     }
   }
+
+  });
 
 </script>
 
