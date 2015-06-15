@@ -166,6 +166,58 @@
   var OutC_seriesW = [];
   var OutF_seriesW = [];
 
+  var valGradF = new steelseries.gradientWrapper( 65,
+                                                  90,
+                                                  [ 0, 0.33, 0.66, 0.85, 1],
+                                                  [ new steelseries.rgbaColor(0, 0, 200, 1),
+                                                    new steelseries.rgbaColor(0, 200, 0, 1),
+                                                    new steelseries.rgbaColor(200, 200, 0, 1),
+                                                    new steelseries.rgbaColor(200, 0, 0, 1),
+                                                    new steelseries.rgbaColor(200, 0, 0, 1) ]);
+  var valGradC = new steelseries.gradientWrapper( 10,
+                                                  40,
+                                                  [ 0, 0.33, 0.66, 0.85, 1],
+                                                  [ new steelseries.rgbaColor(0, 0, 200, 1),
+                                                    new steelseries.rgbaColor(0, 200, 0, 1),
+                                                    new steelseries.rgbaColor(200, 200, 0, 1),
+                                                    new steelseries.rgbaColor(200, 0, 0, 1),
+                                                    new steelseries.rgbaColor(200, 0, 0, 1) ]);
+  pool = new steelseries.LinearBargraph('poolThermometerCanvas', {
+           width: 140,
+           height: 320,
+           valueGradient: valGradF,
+           useValueGradient: true,
+           minValue: 65,
+           maxValue: 90,
+           gaugeType: steelseries.GaugeType.TYPE2,
+           titleString: 'Piscine',
+           unitString: '°F',
+           thresholdVisible: false,
+           lcdVisible: true,
+           minMeasuredValueVisible: true,
+           maxMeasuredValueVisible: true,
+           //MinMeasuredValue: 65,
+           //MaxMeasuredValue: 90
+  });
+
+  out = new steelseries.LinearBargraph('outThermometerCanvas', {
+          width: 140,
+          height: 320,
+          valueGradient: valGradC,
+          useValueGradient: true,
+          minValue: 10,
+          maxValue: 40,
+          gaugeType: steelseries.GaugeType.TYPE2,
+          titleString: 'Extérieur',
+          unitString: '°C',
+          thresholdVisible: false,
+          lcdVisible: true,
+          minMeasuredValueVisible: true,
+          maxMeasuredValueVisible: true,
+          //MaxMeasuredValue: 40,
+          //MinMeasuredValue: 10
+    });
+
   console.log(now);
   console.log(startOfYesterday);
   console.log(startWeekly);
@@ -244,60 +296,6 @@
       }
     }
   }
-
-  var valGradF = new steelseries.gradientWrapper( 65,
-                                                  90,
-                                                  [ 0, 0.33, 0.66, 0.85, 1],
-                                                  [ new steelseries.rgbaColor(0, 0, 200, 1),
-                                                    new steelseries.rgbaColor(0, 200, 0, 1),
-                                                    new steelseries.rgbaColor(200, 200, 0, 1),
-                                                    new steelseries.rgbaColor(200, 0, 0, 1),
-                                                    new steelseries.rgbaColor(200, 0, 0, 1) ]);
-  var valGradC = new steelseries.gradientWrapper( 10,
-                                                  40,
-                                                  [ 0, 0.33, 0.66, 0.85, 1],
-                                                  [ new steelseries.rgbaColor(0, 0, 200, 1),
-                                                    new steelseries.rgbaColor(0, 200, 0, 1),
-                                                    new steelseries.rgbaColor(200, 200, 0, 1),
-                                                    new steelseries.rgbaColor(200, 0, 0, 1),
-                                                    new steelseries.rgbaColor(200, 0, 0, 1) ]);
-  pool = new steelseries.LinearBargraph('poolThermometerCanvas', {
-           width: 140,
-           height: 320,
-           valueGradient: valGradF,
-           useValueGradient: true,
-           minValue: 65,
-           maxValue: 90,
-           gaugeType: steelseries.GaugeType.TYPE2,
-           titleString: 'Piscine',
-           unitString: '°F',
-           thresholdVisible: false,
-           lcdVisible: true,
-           minMeasuredValueVisible: true,
-           maxMeasuredValueVisible: true,
-           //MinMeasuredValue: 65,
-           //MaxMeasuredValue: 90
-  });
-
-  out = new steelseries.LinearBargraph('outThermometerCanvas', {
-          width: 140,
-          height: 320,
-          valueGradient: valGradC,
-          useValueGradient: true,
-          minValue: 10,
-          maxValue: 40,
-          gaugeType: steelseries.GaugeType.TYPE2,
-          titleString: 'Extérieur',
-          unitString: '°C',
-          thresholdVisible: false,
-          lcdVisible: true,
-          minMeasuredValueVisible: true,
-          maxMeasuredValueVisible: true,
-          //MaxMeasuredValue: 40,
-          //MinMeasuredValue: 10
-    });
-
-
 
 /*
   xively.datastream.history( "302281936", "PoolTemperature", queryWeekly, loadDataW);
