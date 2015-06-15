@@ -452,7 +452,6 @@
     <td>
 <table id="graph">
   <tr>
-    <!--<td><div id="div_temp_chart_cm"> <img src="https://api.xively.com/v2/feeds/302281936/datastreams/PoolTemperatureF.png?width=750&height=320&colour=%23f15a24&duration=24hours&show_axis_labels=true&detailed_grid=true&timezone=America/Montreal" ></div></td>-->
     <td>
       <div id="chart_container" >
         <div id="chartF"></div>
@@ -465,7 +464,6 @@
     <td><canvas id=poolThermometerCanvas width=200 height=200>No canvas in your browser...sorry...</canvas></td>
   </tr>
   <tr>
-    <!--<td><img src="https://api.xively.com/v2/feeds/302281936/datastreams/ExteriorTemperature.png?width=750&height=320&colour=%23f15a24&duration=24hours&show_axis_labels=true&detailed_grid=true&timezone=America/Montreal" ></td>-->
     <td>
       <div id="chart_container" >
         <div id="chartC"></div>
@@ -479,6 +477,34 @@
     </td>
     <td><canvas id=outThermometerCanvas width=200 height=200>No canvas in your browser...sorry...</canvas></td>
   </tr>
+  <tr>
+    <td>
+      <div id="chart_container" >
+        <div id="chartFW"></div>
+        <div id="legend_container">
+          <div id="smoother" title="Smoothing"></div>
+          <div id="legend"></div>
+        </div>
+      </div>
+    </td>
+    <td><canvas id=poolThermometerCanvas width=200 height=200>No canvas in your browser...sorry...</canvas></td>
+  </tr>
+  <tr>
+    <td>
+      <div id="chart_container" >
+        <div id="chartCW"></div>
+          <div id="legend_container">
+          <div id="timeline"></div>
+          <div id="preview"></div>
+          <div id="smoother" title="Smoothing"></div>
+          <div id="legend"></div>
+        </div>
+      </div>
+    </td>
+    <td><canvas id=outThermometerCanvas width=200 height=200>No canvas in your browser...sorry...</canvas></td>
+  </tr>
+
+
 </table>
     </td>
   </tr>
