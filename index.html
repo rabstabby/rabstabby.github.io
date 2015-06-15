@@ -151,8 +151,6 @@
           PoolF_serie_min = convertToF(data.min_value);
           PoolF_serie_max = convertToF(data.max_value);
           pool.setValueAnimated( convertToF(data.current_value));
-          pool.minValue = PoolF_serie_min,
-          pool.maxValue = 80
           break;
         case "ExteriorTemperature":
           OutC_series[i] = {x: date.unix(), y: value};
