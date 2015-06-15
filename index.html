@@ -254,7 +254,7 @@
       var xAxis = new Rickshaw.Graph.Axis.X({
         graph: graph,
         tickFormat: function(x){
-          return new Date(x * 1000).toLocateTimeString();
+          return new Date(x * 1000).toLocaleTimeString();
         }
       })
       xAxis.render();
