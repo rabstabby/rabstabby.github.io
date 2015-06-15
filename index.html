@@ -140,7 +140,8 @@
 
   var startOfYesterday = moment().subtract("day", 1);
   // it seams there is a limit of <5 days for and historical query
-  var startWeekly = moment().subtract("day", 4); 
+  //var startWeekly = moment().subtract("day", 4); 
+  var startWeekly = moment().subtract("week", 1); 
   var now = moment();
   var PoolC_series = [];
   var PoolC_serie_min = 1000;
