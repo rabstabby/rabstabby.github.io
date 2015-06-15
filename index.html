@@ -147,6 +147,8 @@
             PoolF_serie_min = convertToF(data.min_value);
             PoolF_serie_max = convertToF(data.max_value);
             pool.setValueAnimated( convertToF(data.current_value));
+            pool.setMinValue = convertToF(data.min_value);
+            pool.setMaxValue = convertToF(data.max_value);
             break;
           case "ExteriorTemperature":
             OutC_series[i] = {x: date.unix(), y: value};
@@ -156,6 +158,8 @@
             OutF_serie_min = convertToF(data.min_value);
             OutF_serie_max = convertToF(data.max_value);
             out.setValueAnimated( parseFloat(data.current_value) );
+            out.setMinValue = data.min_value;
+            out.setMaxValue = data.max_value;
             break;
           default:
             console.log("default")
