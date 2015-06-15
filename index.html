@@ -1,7 +1,7 @@
 <html>
 <head>
 <meta charset="UTF-8"> 
-<title>Sensors</title>
+<title>Patpaul's Sensors</title>
 
 <link rel="stylesheet" type="text/css" href="mystyle.css">
 
@@ -33,349 +33,298 @@
 
   // Make sure the document is ready to be handled
   $(document).ready(function($) {
-  ///// Rickshaw /////
-  // Set your API key first
-  xively.setKey( "SICanKXlrENyrCh3cYsdBZTjmoxH39kujPYRGnJGnZ7bVM8k" );
+    ///// Rickshaw /////
+    // Set your API key first
+    xively.setKey( "SICanKXlrENyrCh3cYsdBZTjmoxH39kujPYRGnJGnZ7bVM8k" );
 
-  var startOfYesterday = moment().subtract("day", 1);
-  // it seams there is a limit of <5 days for and historical query
-  //var startWeekly = moment().subtract("day", 4); 
-  var startWeekly = moment().subtract("week", 1); 
-  var now = moment();
-  var PoolC_series = [];
-  var PoolC_serie_min = 1000;
-  var PoolC_serie_max = -1000;
-  var PoolF_series = [];
-  var PoolF_serie_min = 1000;
-  var PoolF_serie_max = -1000;
-  var OutC_series = [];
-  var OutC_serie_min = 1000;
-  var OutC_serie_max = -1000;
-  var OutF_series = [];
-  var OutF_serie_min = 1000;
-  var OutF_serie_max = -1000;
+    var startOfYesterday = moment().subtract("day", 1);
+    var startWeekly = moment().subtract("week", 1); 
+    var now = moment();
+    var PoolC_series = [];
+    var PoolC_serie_min = 1000;
+    var PoolC_serie_max = -1000;
+    var PoolF_series = [];
+    var PoolF_serie_min = 1000;
+    var PoolF_serie_max = -1000;
+    var OutC_series = [];
+    var OutC_serie_min = 1000;
+    var OutC_serie_max = -1000;
+    var OutF_series = [];
+    var OutF_serie_min = 1000;
+    var OutF_serie_max = -1000;
 
-  var PoolC_seriesW = [];
-  var PoolC_serieW_min = 1000;
-  var PoolC_serieW_max = -1000;
-  var PoolF_seriesW = [];
-  var PoolF_serieW_min = 1000;
-  var PoolF_serieW_max = -1000;
-  var OutC_seriesW = [];
-  var OutC_serieW_min = 1000;
-  var OutC_serieW_max = -1000;
-  var OutF_seriesW = [];
-  var OutF_serieW_min = 1000;
-  var OutF_serieW_max = -1000;
+    var PoolC_seriesW = [];
+    var PoolC_serieW_min = 1000;
+    var PoolC_serieW_max = -1000;
+    var PoolF_seriesW = [];
+    var PoolF_serieW_min = 1000;
+    var PoolF_serieW_max = -1000;
+    var OutC_seriesW = [];
+    var OutC_serieW_min = 1000;
+    var OutC_serieW_max = -1000;
+    var OutF_seriesW = [];
+    var OutF_serieW_min = 1000;
+    var OutF_serieW_max = -1000;
 
-  var valGradF = new steelseries.gradientWrapper( 65,
-                                                  90,
-                                                  [ 0, 0.33, 0.66, 0.85, 1],
-                                                  [ new steelseries.rgbaColor(0, 0, 200, 1),
-                                                    new steelseries.rgbaColor(0, 200, 0, 1),
-                                                    new steelseries.rgbaColor(200, 200, 0, 1),
-                                                    new steelseries.rgbaColor(200, 0, 0, 1),
-                                                    new steelseries.rgbaColor(200, 0, 0, 1) ]);
-  var valGradC = new steelseries.gradientWrapper( 10,
-                                                  40,
-                                                  [ 0, 0.33, 0.66, 0.85, 1],
-                                                  [ new steelseries.rgbaColor(0, 0, 200, 1),
-                                                    new steelseries.rgbaColor(0, 200, 0, 1),
-                                                    new steelseries.rgbaColor(200, 200, 0, 1),
-                                                    new steelseries.rgbaColor(200, 0, 0, 1),
-                                                    new steelseries.rgbaColor(200, 0, 0, 1) ]);
-  pool = new steelseries.LinearBargraph('poolThermometerCanvas', {
-           width: 140,
-           height: 320,
-           valueGradient: valGradF,
-           useValueGradient: true,
-           minValue: 65,
-           maxValue: 90,
-           gaugeType: steelseries.GaugeType.TYPE2,
-           titleString: 'Piscine',
-           unitString: '°F',
-           thresholdVisible: false,
-           lcdVisible: true,
-           minMeasuredValueVisible: true,
-           maxMeasuredValueVisible: true,
-  });
-
-  out = new steelseries.LinearBargraph('outThermometerCanvas', {
-          width: 140,
-          height: 320,
-          valueGradient: valGradC,
-          useValueGradient: true,
-          minValue: 10,
-          maxValue: 40,
-          gaugeType: steelseries.GaugeType.TYPE2,
-          titleString: 'Extérieur',
-          unitString: '°C',
-          thresholdVisible: false,
-          lcdVisible: true,
-          minMeasuredValueVisible: true,
-          maxMeasuredValueVisible: true,
+    var valGradF = new steelseries.gradientWrapper( 65,
+                                                    90,
+                                                    [ 0, 0.33, 0.66, 0.85, 1],
+                                                    [ new steelseries.rgbaColor(0, 0, 200, 1),
+                                                      new steelseries.rgbaColor(0, 200, 0, 1),
+                                                      new steelseries.rgbaColor(200, 200, 0, 1),
+                                                      new steelseries.rgbaColor(200, 0, 0, 1),
+                                                      new steelseries.rgbaColor(200, 0, 0, 1) ]);
+    var valGradC = new steelseries.gradientWrapper( 10,
+                                                    40,
+                                                    [ 0, 0.33, 0.66, 0.85, 1],
+                                                    [ new steelseries.rgbaColor(0, 0, 200, 1),
+                                                      new steelseries.rgbaColor(0, 200, 0, 1),
+                                                      new steelseries.rgbaColor(200, 200, 0, 1),
+                                                      new steelseries.rgbaColor(200, 0, 0, 1),
+                                                      new steelseries.rgbaColor(200, 0, 0, 1) ]);
+    pool = new steelseries.LinearBargraph( 'poolThermometerCanvas', {
+                                           width: 140,
+                                           height: 320,
+                                           valueGradient: valGradF,
+                                           useValueGradient: true,
+                                           minValue: 65,
+                                           maxValue: 90,
+                                           gaugeType: steelseries.GaugeType.TYPE2,
+                                           titleString: 'Piscine',
+                                           unitString: '°F',
+                                           thresholdVisible: false,
+                                           lcdVisible: true,
+                                           minMeasuredValueVisible: true,
+                                           maxMeasuredValueVisible: true,
     });
 
-  console.log(now);
-  console.log(startOfYesterday);
-  console.log(startWeekly);
+    out = new steelseries.LinearBargraph( 'outThermometerCanvas', {
+                                           width: 140,
+                                           height: 320,
+                                           valueGradient: valGradC,
+                                           useValueGradient: true,
+                                           minValue: 10,
+                                           maxValue: 40,
+                                           gaugeType: steelseries.GaugeType.TYPE2,
+                                           titleString: 'Extérieur',
+                                           unitString: '°C',
+                                           thresholdVisible: false,
+                                           lcdVisible: true,
+                                           minMeasuredValueVisible: true,
+                                           maxMeasuredValueVisible: true,
+    });
 
-  var queryDaily = {
-    start: startOfYesterday.toJSON(),
-    //end: now.toJSON(),
-    interval: 300,
-    limit: 1000,
-  };
+    var queryDaily = {
+      start: startOfYesterday.toJSON(),
+      interval: 300,
+      limit: 1000,
+    };
 
-  var queryWeekly = {
-    start: startWeekly.toJSON(),
-    //end: now.toJSON(),
-    interval: 900,
-    limit: 1000,
-  };
+    var queryWeekly = {
+      start: startWeekly.toJSON(),
+      interval: 900,
+      limit: 1000,
+    };
   
-  function convertToF(rcvd_val) {
-    return (parseFloat(rcvd_val) * (9/5)) + 32;
-  }
-  
-  xively.datastream.history( "302281936", "PoolTemperature", queryDaily, loadData);
-  xively.datastream.history( "302281936", "ExteriorTemperature", queryDaily, loadData);
-
-  function loadData(data) {
-    var filtedData = data.datapoints;
-    for (var i=0; i < filtedData.length; i++ ) {
-      var date = moment(filtedData[i].at);
-      var value = parseFloat(filtedData[i].value);
-      switch (data.id) {
-        case "PoolTemperature":
-          PoolC_series[i] = {x: date.unix(), y: value};
-          PoolC_serie_min = parseFloat(data.min_value);
-          PoolC_serie_max = parseFloat(data.max_value);
-          PoolF_series[i] = {x: date.unix(), y: convertToF(value)};
-          PoolF_serie_min = convertToF(data.min_value);
-          PoolF_serie_max = convertToF(data.max_value);
-          pool.setValueAnimated( convertToF(data.current_value));
-          break;
-        case "ExteriorTemperature":
-          OutC_series[i] = {x: date.unix(), y: value};
-          OutC_serie_min = parseFloat(data.min_value);
-          OutC_serie_max = parseFloat(data.max_value);
-          OutF_series[i] = {x: date.unix(), y: convertToF(value)};
-          OutF_serie_min = convertToF(data.min_value);
-          OutF_serie_max = convertToF(data.max_value);
-          out.setValueAnimated( parseFloat(data.current_value) );
-          break;
-        default:
-          console.log("default")
-      }
+    function convertToF(rcvd_val) {
+      return (parseFloat(rcvd_val) * (9/5)) + 32;
     }
-    if (PoolC_series.length == OutC_series.length) {
+  
+    xively.datastream.history( "302281936", "PoolTemperature", queryDaily, loadData);
+    xively.datastream.history( "302281936", "ExteriorTemperature", queryDaily, loadData);
+
+    function loadData(data) {
+      var filtedData = data.datapoints;
+      for (var i=0; i < filtedData.length; i++ ) {
+        var date = moment(filtedData[i].at);
+        var value = parseFloat(filtedData[i].value);
+        switch (data.id) {
+          case "PoolTemperature":
+            PoolC_series[i] = {x: date.unix(), y: value};
+            PoolC_serie_min = parseFloat(data.min_value);
+            PoolC_serie_max = parseFloat(data.max_value);
+            PoolF_series[i] = {x: date.unix(), y: convertToF(value)};
+            PoolF_serie_min = convertToF(data.min_value);
+            PoolF_serie_max = convertToF(data.max_value);
+            pool.setValueAnimated( convertToF(data.current_value));
+            break;
+          case "ExteriorTemperature":
+            OutC_series[i] = {x: date.unix(), y: value};
+            OutC_serie_min = parseFloat(data.min_value);
+            OutC_serie_max = parseFloat(data.max_value);
+            OutF_series[i] = {x: date.unix(), y: convertToF(value)};
+            OutF_serie_min = convertToF(data.min_value);
+            OutF_serie_max = convertToF(data.max_value);
+            out.setValueAnimated( parseFloat(data.current_value) );
+            break;
+          default:
+            console.log("default")
+        }
+      }
+      if (PoolC_series.length == OutC_series.length) {
         drawgraphifready(PoolC_series , OutC_series , (PoolC_serie_min < OutC_serie_min)?PoolC_serie_min:OutC_serie_min, (PoolC_serie_max > OutC_serie_max)?PoolC_serie_max:OutC_serie_max , "#chartC");
       }
       if (PoolF_series.length == OutF_series.length) {
         drawgraphifready(PoolF_series , OutF_series , (PoolF_serie_min < OutF_serie_min)?PoolF_serie_min:OutF_serie_min, (PoolF_serie_max > OutF_serie_max)?PoolF_serie_max:OutF_serie_max ,"#chartF");
       }
-  }
-
-  xively.datastream.history( "302281936", "PoolTemperature", queryWeekly, loadDataW);
-  xively.datastream.history( "302281936", "ExteriorTemperature", queryWeekly, loadDataW);
-
-  function loadDataW(data) {
-    var filtedData = data.datapoints;
-    for (var i=0; i < filtedData.length; i++ ) {
-      var date = moment(filtedData[i].at);
-      var value = parseFloat(filtedData[i].value);
-      switch (data.id) {
-        case "PoolTemperature":
-          PoolC_seriesW[i] = {x: date.unix(), y: value};
-          PoolC_serieW_min = parseFloat(data.min_value);
-          PoolC_serieW_max = parseFloat(data.max_value);
-          PoolF_seriesW[i] = {x: date.unix(), y: convertToF(value)};
-          PoolF_serieW_min = convertToF(data.min_value);
-          PoolF_serieW_max = convertToF(data.max_value);
-          break;
-        case "ExteriorTemperature":
-          OutC_seriesW[i] = {x: date.unix(), y: value};
-          OutC_serieW_min = parseFloat(data.min_value);
-          OutC_serieW_max = parseFloat(data.max_value);
-          OutF_seriesW[i] = {x: date.unix(), y: convertToF(value)};
-          OutF_serieW_min = convertToF(data.min_value);
-          OutF_serieW_max = convertToF(data.max_value);
-          break;
-        default:
-          console.log("default")
-      }
     }
+
+    xively.datastream.history( "302281936", "PoolTemperature", queryWeekly, loadDataW);
+    xively.datastream.history( "302281936", "ExteriorTemperature", queryWeekly, loadDataW);
+
+    function loadDataW(data) {
+      var filtedData = data.datapoints;
+      for (var i=0; i < filtedData.length; i++ ) {
+        var date = moment(filtedData[i].at);
+        var value = parseFloat(filtedData[i].value);
+        switch (data.id) {
+          case "PoolTemperature":
+            PoolC_seriesW[i] = {x: date.unix(), y: value};
+            PoolC_serieW_min = parseFloat(data.min_value);
+            PoolC_serieW_max = parseFloat(data.max_value);
+            PoolF_seriesW[i] = {x: date.unix(), y: convertToF(value)};
+            PoolF_serieW_min = convertToF(data.min_value);
+            PoolF_serieW_max = convertToF(data.max_value);
+            break;
+          case "ExteriorTemperature":
+            OutC_seriesW[i] = {x: date.unix(), y: value};
+            OutC_serieW_min = parseFloat(data.min_value);
+            OutC_serieW_max = parseFloat(data.max_value);
+            OutF_seriesW[i] = {x: date.unix(), y: convertToF(value)};
+            OutF_serieW_min = convertToF(data.min_value);
+            OutF_serieW_max = convertToF(data.max_value);
+            break;
+          default:
+            console.log("default")
+        }
+      }
       if (PoolC_seriesW.length == OutC_seriesW.length) {
         drawgraphifready(PoolC_seriesW , OutC_seriesW , (PoolC_serieW_min < OutC_serieW_min)?PoolC_serieW_min:OutC_serieW_min, (PoolC_serieW_max > OutC_serieW_max)?PoolC_serieW_max:OutC_serieW_max , "#chartCW");
       }
       if (PoolF_seriesW.length == OutF_seriesW.length) {
         drawgraphifready(PoolF_seriesW , OutF_seriesW , (PoolF_serieW_min < OutF_serieW_min)?PoolF_serieW_min:OutF_serieW_min, (PoolF_serieW_max > OutF_serieW_max)?PoolF_serieW_max:OutF_serieW_max ,"#chartFW");
       }
-  }
-
-  function drawgraphifready(serie1, serie2, min_val, max_val, anchor) {
-    console.log("Entered drawgraphifready: " + serie1.length + " - " + serie2.length);
-    if ((serie1.length > 0) && (serie2.length > 0)){
-      var graph = new Rickshaw.Graph( {
-        element: document.querySelector(anchor),
-        width: 750,
-        height: 320,
-        renderer: 'line',
-        min: min_val - (min_val % 5),
-        max: max_val + (5 - (max_val % 5)),
-        series: [
-          {
-            data: serie1,
-            color: '#6060c0',
-            name: "Piscine"
-          },
-          {
-            data: serie2,
-            color: '#FF0000',
-            name: "Exterieur"
-          },
-        ]
-      } );
-
-      graph.render();
-
-      var hoverDetail = new Rickshaw.Graph.HoverDetail( {
-        graph: graph,
-        xFormatter: function(x) {
-	  return new Date(x * 1000).toString();
-	}
-      } );
-      
-      var ticksTreatment = 'glow';
-/*      
-      var unit = {}
-        unit.formatTime = function(d) {
-        return d.toUTCString().match(/(\d+:\d+):/)[1];
-      };
-        unit.formatter = function(d) { return this.formatTime(d)};
-        unit.name = "5 minute";
-        unit.seconds = 300;
-      var xAxis = new Rickshaw.Graph.Axis.Time({
-        graph: graph,
-        timeUnit:unit,
-        ticksTreatment: ticksTreatment,
-        timeFixture: new Rickshaw.Fixtures.Time.Local()
-      });
-      xAxis.render();
-*/
-/*
-      var axes = new Rickshaw.Graph.Axis.Time( {
-        graph: graph,
-        ticksTreatment: ticksTreatment,
-        timeFixture: new Rickshaw.Fixtures.Time.Local()
-      });
-      axes.render();
-*/
-
-var xAxis = new Rickshaw.Graph.Axis.Time( {
-	graph: graph,
-	ticksTreatment: ticksTreatment,
-	timeFixture: new Rickshaw.Fixtures.Time.Local()
-} );
-
-xAxis.render();
-
-/*
-      var xAxis = new Rickshaw.Graph.Axis.X({
-        graph: graph,
-        tickFormat: function(x){
-          return new Date(x / 1000).toLocaleTimeString();
-        }
-      })
-      xAxis.render();
-*/
-
-      var yAxis = new Rickshaw.Graph.Axis.Y({
-        graph: graph
-      });
-
-      yAxis.render();
     }
-  }
 
+    function drawgraphifready(serie1, serie2, min_val, max_val, anchor) {
+      if ((serie1.length > 0) && (serie2.length > 0)){
+        var graph = new Rickshaw.Graph( {
+          element: document.querySelector(anchor),
+          width: 750,
+          height: 320,
+          renderer: 'line',
+          min: min_val - (min_val % 5),
+          max: max_val + (5 - (max_val % 5)),
+          series: [
+            {
+              data: serie1,
+              color: '#6060c0',
+              name: "Piscine"
+            },
+            {
+              data: serie2,
+              color: '#FF0000',
+              name: "Exterieur"
+            },
+          ]
+        } );
+
+        graph.render();
+
+        var hoverDetail = new Rickshaw.Graph.HoverDetail( {
+          graph: graph,
+          xFormatter: function(x) {
+	    return new Date(x * 1000).toString();
+	  }
+        } );
+      
+        var ticksTreatment = 'glow';
+
+        var xAxis = new Rickshaw.Graph.Axis.Time( {
+          graph: graph,
+          ticksTreatment: ticksTreatment,
+          timeFixture: new Rickshaw.Fixtures.Time.Local()
+        } );
+
+        xAxis.render();
+
+        var yAxis = new Rickshaw.Graph.Axis.Y({
+          graph: graph
+        });
+        yAxis.render();
+      }
+    }
   });
 
 </script>
 
 </head>
-
 <body>
-
 <div align="center" style="vertical-align:bottom">
-
-<h2>Les derni&egrave;res 24 heures</h2>
 <table>
   <tr>
     <td>
-<table id="graph">
-  <tr>
-    <td>
-      <div id="chart_container" >
-        <div id="chartF"></div>
-        <div id="legend_container">
-          <div id="smoother" title="Smoothing"></div>
-          <div id="legend"></div>
-        </div>
-      </div>
+      <div align="center" style="vertical-align:bottom">
+      <h2>Les derni&egrave;res 24 heures</h2>
+      <table id="graph">
+        <tr>
+          <td>
+            <div id="chart_container" >
+              <div id="chartF"></div>
+              <div id="legend_container">
+                <div id="smoother" title="Smoothing"></div>
+                <div id="legend"></div>
+              </div>
+            </div>
+          </td>
+          <td><canvas id=poolThermometerCanvas width=200 height=200>No canvas in your browser...sorry...</canvas></td>
+        </tr>
+        <tr>
+          <td>
+            <div id="chart_container" >
+              <div id="chartC"></div>
+                <div id="legend_container">
+                <div id="timeline"></div>
+                <div id="preview"></div>
+                <div id="smoother" title="Smoothing"></div>
+                <div id="legend"></div>
+              </div>
+            </div>
+          </td>
+          <td><canvas id=outThermometerCanvas width=200 height=200>No canvas in your browser...sorry...</canvas></td>
+        </tr>
+      </table>
+
+      <div align="center" style="vertical-align:bottom">
+      <h2>La derni&egrave;re semaine</h2>
+      <table>
+        <tr>
+          <td>
+            <div id="chart_container" >
+              <div id="chartFW"></div>
+              <div id="legend_container">
+                <div id="smoother" title="Smoothing"></div>
+                <div id="legend"></div>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="chart_container" >
+              <div id="chartCW"></div>
+                <div id="legend_container">
+                <div id="timeline"></div>
+                <div id="preview"></div>
+                <div id="smoother" title="Smoothing"></div>
+                <div id="legend"></div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
     </td>
-    <td><canvas id=poolThermometerCanvas width=200 height=200>No canvas in your browser...sorry...</canvas></td>
-  </tr>
-  <tr>
-    <td>
-      <div id="chart_container" >
-        <div id="chartC"></div>
-          <div id="legend_container">
-          <div id="timeline"></div>
-          <div id="preview"></div>
-          <div id="smoother" title="Smoothing"></div>
-          <div id="legend"></div>
-        </div>
-      </div>
-    </td>
-    <td><canvas id=outThermometerCanvas width=200 height=200>No canvas in your browser...sorry...</canvas></td>
   </tr>
 </table>
-
-<div align="center" style="vertical-align:bottom">
-  
-<h2>La derni&egrave;re semaine</h2>
-<table>
-  <tr>
-    <td>
-      <div id="chart_container" >
-        <div id="chartFW"></div>
-        <div id="legend_container">
-          <div id="smoother" title="Smoothing"></div>
-          <div id="legend"></div>
-        </div>
-      </div>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <div id="chart_container" >
-        <div id="chartCW"></div>
-          <div id="legend_container">
-          <div id="timeline"></div>
-          <div id="preview"></div>
-          <div id="smoother" title="Smoothing"></div>
-          <div id="legend"></div>
-        </div>
-      </div>
-    </td>
-  </tr>
-</table>
-
-
-    </td>
-  </tr>
-</table>
-
 </body>
 </html>
