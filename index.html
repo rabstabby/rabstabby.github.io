@@ -290,6 +290,7 @@
           PoolF_serie_max = ((parseFloat(data.current_value) * (9/5)) + 32);
         }
         pool.setValueAnimated( (parseFloat(data.current_value) * (9/5)) + 32 );
+        break;
       case "ExteriorTemperature":
         OutC_series.push({x: moment(data.at).unix(), y:parseFloat(data.current_value)});
         OutF_series.push({x: moment(data.at).unix(), y: ((parseFloat(data.current_value) * (9/5)) + 32)});
@@ -302,6 +303,7 @@
           OutF_serie_max = ((parseFloat(data.current_value) * (9/5)) + 32);
         }
         out.setValueAnimated( parseFloat(data.current_value) );
+        break;
       default:
         console.log("default")
       }
