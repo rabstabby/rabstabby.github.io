@@ -156,9 +156,17 @@
   var OutF_serie_max = -1000;
 
   var PoolC_seriesW = [];
+  var PoolC_serieW_min = 1000;
+  var PoolC_serieW_max = -1000;
   var PoolF_seriesW = [];
+  var PoolF_serieW_min = 1000;
+  var PoolF_serieW_max = -1000;
   var OutC_seriesW = [];
+  var OutC_serieW_min = 1000;
+  var OutC_serieW_max = -1000;
   var OutF_seriesW = [];
+  var OutF_serieW_min = 1000;
+  var OutF_serieW_max = -1000;
 
   var valGradF = new steelseries.gradientWrapper( 65,
                                                   90,
@@ -262,15 +270,6 @@
             OutF_serie_max = ((value * (9/5)) + 32);
           }
           OutF_series[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
-          if (OutC_series.length == PoolC_series.length) {
-            //OutC_series.push({x: moment(data.at).unix(), y:parseFloat(data.current_value)});
-            out.setValueAnimated( parseFloat(data.current_value) );
-            drawgraphifready(PoolC_series , OutC_series , (PoolC_serie_min < OutC_serie_min)?PoolC_serie_min:OutC_serie_min, (PoolC_serie_max > OutC_serie_max)?PoolC_serie_max:OutC_serie_max , "#chartC");
-          }
-          if (OutF_series.length == PoolF_series.length) {
-            //OutF_series.push({x: moment(data.at).unix(), y: ((parseFloat(data.current_value) * (9/5)) + 32)});
-            drawgraphifready(PoolF_series , OutF_series , (PoolF_serie_min < OutF_serie_min)?PoolF_serie_min:OutF_serie_min, (PoolF_serie_max > OutF_serie_max)?PoolF_serie_max:OutF_serie_max , "#chartF");
-          }
           break;
         default:
           console.log("default")
@@ -279,8 +278,6 @@
 
     switch (data.id) {
       case "PoolTemperature":
-        //PoolC_series.push({x: moment(data.at).unix() - 14100, y:parseFloat(data.current_value)});
-        //PoolF_series.push({x: moment(data.at).unix() - 14100, y: ((parseFloat(data.current_value) * (9/5)) + 32)});
         if (parseFloat(data.current_value) < PoolC_serie_min) {
           PoolC_serie_min = parseFloat(data.current_value);
           PoolF_serie_min = ((parseFloat(data.current_value) * (9/5)) + 32);
@@ -292,8 +289,6 @@
         pool.setValueAnimated( (parseFloat(data.current_value) * (9/5)) + 32 );
         break;
       case "ExteriorTemperature":
-        //OutC_series.push({x: moment(data.at).unix() - 14100, y:parseFloat(data.current_value)});
-        //OutF_series.push({x: moment(data.at).unix() - 14100, y: ((parseFloat(data.current_value) * (9/5)) + 32)});
         if (parseFloat(data.current_value) < OutC_serie_min) {
           OutC_serie_min = parseFloat(data.current_value);
           OutF_serie_min = ((parseFloat(data.current_value) * (9/5)) + 32);
@@ -313,21 +308,13 @@
       if (PoolF_series.length == OutF_series.length) {
         drawgraphifready(PoolF_series , OutF_series , (PoolF_serie_min < OutF_serie_min)?PoolF_serie_min:OutF_serie_min, (PoolF_serie_max > OutF_serie_max)?PoolF_serie_max:OutF_serie_max ,"#chartF");
       }
-      
-      for (var i=0; i < PoolC_series.length; i++ ) {
-        console.log("PoolC_series[" + i + "] = " + PoolC_series[i].x);
-      }
-
   }
 
-/*
+
   xively.datastream.history( "302281936", "PoolTemperature", queryWeekly, loadDataW);
   xively.datastream.history( "302281936", "ExteriorTemperature", queryWeekly, loadDataW);
-  xively.datastream.history( "302281936", "PoolTemperatureF", queryWeekly, loadDataW);
-  xively.datastream.history( "302281936", "ExteriorTemperatureF", queryWeekly, loadDataW);
 
   function loadDataW(data) {
-    //var unit = data.unit.label;
     var filtedData = data.datapoints;
     for (var i=0; i < filtedData.length; i++ ) {
       var date = moment(filtedData[i].at);
@@ -335,34 +322,64 @@
       switch (data.id) {
         case "PoolTemperature":
           PoolC_seriesW[i] = {x: date.unix(), y: value};
-          if (PoolC_seriesW.length == OutC_seriesW.length) {
-            drawgraphifready(PoolC_seriesW , OutC_seriesW , data.min_value , data.max_value  , "#chartCW");
+          if (value < PoolC_serieW_min) {
+            PoolC_serieW_min = value;
+            PoolF_serieW_min = ((value * (9/5)) + 32);
           }
-          break;
-        case "PoolTemperatureF":
-          PoolF_seriesW[i] = {x: date.unix(), y: value};
-          if (PoolF_seriesW.length == OutF_seriesW.length) {
-            drawgraphifready(PoolF_seriesW , OutF_seriesW , data.min_value , data.max_value  , "#chartFW");
+          if (value > PoolC_serieW_max) {
+            PoolC_serieW_max = value;
+            PoolF_serieW_max = ((value * (9/5)) + 32);
           }
+          PoolF_seriesW[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
           break;
         case "ExteriorTemperature":
           OutC_seriesW[i] = {x: date.unix(), y: value};
-          if (PoolC_seriesW.length == OutC_seriesW.length) {
-            drawgraphifready(PoolC_seriesW , OutC_seriesW , data.min_value , data.max_value  , "#chartCW");
+          if (value < OutC_serieW_min) {
+            OutC_serieW_min = value;
+            OutF_serieW_min = ((value * (9/5)) + 32);
           }
-          break;
-        case "ExteriorTemperatureF":
-          OutF_seriesW[i] = {x: date.unix(), y: value};
-          if (PoolF_seriesW.length == OutF_seriesW.length) {
-            drawgraphifready(PoolF_seriesW , OutF_seriesW , data.min_value , data.max_value  , "#chartFW");
+          if (value > OutC_serieW_max) {
+            OutC_serieW_max = value;
+            OutF_serieW_max = ((value * (9/5)) + 32);
           }
+          OutF_seriesW[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
           break;
         default:
           console.log("default")
       }
     }
+
+    switch (data.id) {
+      case "PoolTemperature":
+        if (parseFloat(data.current_value) < PoolC_serieW_min) {
+          PoolC_serieW_min = parseFloat(data.current_value);
+          PoolF_serieW_min = ((parseFloat(data.current_value) * (9/5)) + 32);
+        }
+        if (parseFloat(data.current_value) > PoolC_serieW_max) {
+          PoolC_serieW_max = parseFloat(data.current_value);
+          PoolF_serieW_max = ((parseFloat(data.current_value) * (9/5)) + 32);
+        }
+        break;
+      case "ExteriorTemperature":
+        if (parseFloat(data.current_value) < OutC_serieW_min) {
+          OutC_serieW_min = parseFloat(data.current_value);
+          OutF_serieW_min = ((parseFloat(data.current_value) * (9/5)) + 32);
+        }
+        if (parseFloat(data.current_value) > OutC_serieW_max) {
+          OutC_serieW_max = parseFloat(data.current_value);
+          OutF_serieW_max = ((parseFloat(data.current_value) * (9/5)) + 32);
+        }
+        break;
+      default:
+        console.log("default")
+      }
+      if (PoolC_seriesW.length == OutC_seriesW.length) {
+        drawgraphifready(PoolC_seriesW , OutC_seriesW , (PoolC_serieW_min < OutC_serieW_min)?PoolC_serieW_min:OutC_serieW_min, (PoolC_serieW_max > OutC_serieW_max)?PoolC_serieW_max:OutC_serieW_max , "#chartCW");
+      }
+      if (PoolF_seriesW.length == OutF_seriesW.length) {
+        drawgraphifready(PoolF_seriesW , OutF_seriesW , (PoolF_serieW_min < OutF_serieW_min)?PoolF_serieW_min:OutF_serieW_min, (PoolF_serieW_max > OutF_serieW_max)?PoolF_serieW_max:OutF_serieW_max ,"#chartFW");
+      }
   }
-*/
 
   function drawgraphifready(serie1, serie2, min_val, max_val, anchor) {
     console.log("Entered drawgraphifready: " + serie1.length + " - " + serie2.length);
