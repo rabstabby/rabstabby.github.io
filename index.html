@@ -176,22 +176,22 @@
       case "PoolTemperature":
         if (parseFloat(data.current_value) < PoolC_serie_min) {
           PoolC_serie_min = parseFloat(data.current_value);
-          PoolF_serie_min = ((parseFloat(data.current_value) * (9/5)) + 32);
+          PoolF_serie_min = convertToF(data.current_value);
         }
         if (parseFloat(data.current_value) > PoolC_serie_max) {
           PoolC_serie_max = parseFloat(data.current_value);
-          PoolF_serie_max = ((parseFloat(data.current_value) * (9/5)) + 32);
+          PoolF_serie_max = convertToF(data.current_value);
         }
-        pool.setValueAnimated( (parseFloat(data.current_value) * (9/5)) + 32 );
+        pool.setValueAnimated( convertToF(data.current_value);
         break;
       case "ExteriorTemperature":
         if (parseFloat(data.current_value) < OutC_serie_min) {
           OutC_serie_min = parseFloat(data.current_value);
-          OutF_serie_min = ((parseFloat(data.current_value) * (9/5)) + 32);
+          OutF_serie_min = convertToF(data.current_value);
         }
         if (parseFloat(data.current_value) > OutC_serie_max) {
           OutC_serie_max = parseFloat(data.current_value);
-          OutF_serie_max = ((parseFloat(data.current_value) * (9/5)) + 32);
+          OutF_serie_max = convertToF(data.current_value);
         }
         out.setValueAnimated( parseFloat(data.current_value) );
         break;
@@ -220,25 +220,25 @@
           PoolC_seriesW[i] = {x: date.unix(), y: value};
           if (value < PoolC_serieW_min) {
             PoolC_serieW_min = value;
-            PoolF_serieW_min = ((value * (9/5)) + 32);
+            PoolF_serieW_min = convertToF(value);
           }
           if (value > PoolC_serieW_max) {
             PoolC_serieW_max = value;
-            PoolF_serieW_max = ((value * (9/5)) + 32);
+            PoolF_serieW_max = convertToF(value);
           }
-          PoolF_seriesW[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
+          PoolF_seriesW[i] = {x: date.unix(), y: convertToF(value)};
           break;
         case "ExteriorTemperature":
           OutC_seriesW[i] = {x: date.unix(), y: value};
           if (value < OutC_serieW_min) {
             OutC_serieW_min = value;
-            OutF_serieW_min = ((value * (9/5)) + 32);
+            OutF_serieW_min = convertToF(value);
           }
           if (value > OutC_serieW_max) {
             OutC_serieW_max = value;
-            OutF_serieW_max = ((value * (9/5)) + 32);
+            OutF_serieW_max = convertToF(value);
           }
-          OutF_seriesW[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
+          OutF_seriesW[i] = {x: date.unix(), y: convertToF(value)};
           break;
         default:
           console.log("default")
@@ -249,21 +249,21 @@
       case "PoolTemperature":
         if (parseFloat(data.current_value) < PoolC_serieW_min) {
           PoolC_serieW_min = parseFloat(data.current_value);
-          PoolF_serieW_min = ((parseFloat(data.current_value) * (9/5)) + 32);
+          PoolF_serieW_min = convertToF(data.current_value);
         }
         if (parseFloat(data.current_value) > PoolC_serieW_max) {
           PoolC_serieW_max = parseFloat(data.current_value);
-          PoolF_serieW_max = ((parseFloat(data.current_value) * (9/5)) + 32);
+          PoolF_serieW_max = convertToF(data.current_value);
         }
         break;
       case "ExteriorTemperature":
         if (parseFloat(data.current_value) < OutC_serieW_min) {
           OutC_serieW_min = parseFloat(data.current_value);
-          OutF_serieW_min = ((parseFloat(data.current_value) * (9/5)) + 32);
+          OutF_serieW_min = convertToF(data.current_value);
         }
         if (parseFloat(data.current_value) > OutC_serieW_max) {
           OutC_serieW_max = parseFloat(data.current_value);
-          OutF_serieW_max = ((parseFloat(data.current_value) * (9/5)) + 32);
+          OutF_serieW_max = convertToF(data.current_value);
         }
         break;
       default:
@@ -287,7 +287,6 @@
         renderer: 'line',
         min: min_val - (min_val % 5),
         max: max_val + (5 - (max_val % 5)),
-  //      interpolation: 'basis',
         series: [
           {
             data: serie1,
@@ -307,14 +306,7 @@
       var hoverDetail = new Rickshaw.Graph.HoverDetail( {
         graph: graph
       } );
-/*
-      var smoother = new Rickshaw.Graph.Smoother( {
-	graph: graph,
-	element: document.querySelector('#smoother')
-      } );
 
-      var ticksTreatment = 'glow';
-*/
       var axes = new Rickshaw.Graph.Axis.Time( {
         graph: graph,
         //ticksTreatment: ticksTreatment,
@@ -337,8 +329,6 @@
 </head>
 
 <body>
-
-<!--<strong>Home</strong> - <a href="weekly.html">Weekly</a> - <a href="daily.html">Daily</a> - <a href="hourly.html">Hourly</a>-->
 
 <div align="center" style="vertical-align:bottom">
 
@@ -405,75 +395,6 @@
     </td>
   </tr>
 </table>
-
-<!--
-<h2>La derni&egrave;re journ&eacute;e</h2>
-<table width="70%">
-  <tr>
-    <td>
-<table id="graph">
-  <tr>
-    <th align="center">Combin&eacute;e °C</th>
-    <th align="center">Combin&eacute;e °F</th>
-  <tr>
-    <td>
-      <div id="chart_container" >
-        <div id="chartC"></div>
-          <div id="legend_container">
-          <div id="timeline"></div>
-          <div id="preview"></div>
-          <div id="smoother" title="Smoothing"></div>
-          <div id="legend"></div>
-        </div>
-      </div>
-    </td>
-    <td>
-      <div id="chart_container" >
-        <div id="chartF"></div>
-        <div id="legend_container">
-          <div id="smoother" title="Smoothing"></div>
-          <div id="legend"></div>
-        </div>
-      </div>
-    </td>
-  </tr>
-</table>
-    </td>
-  </tr>
-</table>
-
-<h2>La derni&egrave;re semaine</h2>
-<table width="70%">
-  <tr>
-    <td>
-<table id="graph">
-  <tr>
-  <tr>
-    <td>
-      <div id="chart_container" >
-        <div id="chartCW"></div>
-        <div id="legend_container">
-          <div id="smoother" title="Smoothing"></div>
-          <div id="legend"></div>
-        </div>
-      </div>
-    </td>
-    <td>
-      <div id="chart_container" >
-        <div id="chartFw"></div>
-        <div id="legend_container">
-          <div id="smoother" title="Smoothing"></div>
-          <div id="legend"></div>
-        </div>
-      </div>
-    </td>
-  </tr>
-</table>
-    </td>
-  </tr>
-</table>
-
--->
 
 </body>
 </html>
