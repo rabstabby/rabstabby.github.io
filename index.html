@@ -131,12 +131,9 @@
   };
   
   function convertToF(rcvd_val) {
-    var val_celcius = parseFloat(rcvd_val);
-    return (val_celcius * (9/5)) + 32;
+    return (parseFloat(rcvd_val) * (9/5)) + 32;
   }
   
-  console.log("test_ctof: " + convertToF("0.00"));
-
   xively.datastream.history( "302281936", "PoolTemperature", queryDaily, loadData);
   xively.datastream.history( "302281936", "ExteriorTemperature", queryDaily, loadData);
 
@@ -150,25 +147,25 @@
           PoolC_series[i] = {x: date.unix(), y: value};
           if (value < PoolC_serie_min) {
             PoolC_serie_min = value;
-            PoolF_serie_min = ((value * (9/5)) + 32);
+            PoolF_serie_min = convertToF(value);
           }
           if (value > PoolC_serie_max) {
             PoolC_serie_max = value;
-            PoolF_serie_max = ((value * (9/5)) + 32);
+            PoolF_serie_max = convertToF(value);
           }
-          PoolF_series[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
+          PoolF_series[i] = {x: date.unix(), y: convertToF(value)};
           break;
         case "ExteriorTemperature":
           OutC_series[i] = {x: date.unix(), y: value};
           if (value < OutC_serie_min) {
             OutC_serie_min = value;
-            OutF_serie_min = ((value * (9/5)) + 32);
+            OutF_serie_min = convertToF(value);
           }
           if (value > OutC_serie_max) {
             OutC_serie_max = value;
             OutF_serie_max = ((value * (9/5)) + 32);
           }
-          OutF_series[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
+          OutF_series[i] = {x: date.unix(), y: convertToF(value)};
           break;
         default:
           console.log("default")
