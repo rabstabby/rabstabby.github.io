@@ -226,7 +226,7 @@
 
   var queryDaily = {
     start: startOfYesterday.toJSON(),
-    end: now.toJSON(),
+    //end: now.toJSON(),
     interval: 300,
     limit: 1000,
   };
@@ -234,7 +234,7 @@
   var queryWeekly = {
     start: startWeekly.toJSON(),
     end: now.toJSON(),
-    interval: 300,
+    interval: 3600,
     limit: 1000,
   };
 
