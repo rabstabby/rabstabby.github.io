@@ -29,6 +29,7 @@
   // Make sure the document is ready to be handled
   $(document).ready(function($) {
     // Set the Xively API key (https://xively.com/users/YOUR_USERNAME/keys)
+/*
     xively.setKey( "SICanKXlrENyrCh3cYsdBZTjmoxH39kujPYRGnJGnZ7bVM8k" );
 
     // Replace with your own values
@@ -124,12 +125,13 @@
       // Getting realtime! The function associated with the subscribe method will be executed every time there is an update to the datastream
       xively.datastream.subscribe( feedID, outDatastreamID, function ( event , datastream_updated ) {
         // Display the current value from the updated datastream
-        pool.setValueAnimated( my_out_current_value );
+        out.setValueAnimated( my_out_current_value );
       });
     });
 
     // WARNING: Code here will continue executing while we get the datastream data from Xively, use the function associated with datastream.get to work with the data, when the request is complete
   });
+*/
 
   function init(){
     //alert("here I am in init");
@@ -141,11 +143,7 @@
   // Set your API key first
   xively.setKey( "SICanKXlrENyrCh3cYsdBZTjmoxH39kujPYRGnJGnZ7bVM8k" );
 
-//  var startOfYesterday = moment().subtract("day", 1).startOf('day');
-// var endOfYesterday = moment().subtract("hour", 3).startOf('day');
   var startOfYesterday = moment().subtract("day", 1);
-//  var endOfYesterday = moment();
-//  var startDaily = moment().subtract("day", 1);
   // it seams there is a limit of <5 days for and historical query
   var startWeekly = moment().subtract("day", 4); 
   var now = moment();
@@ -173,13 +171,10 @@
 
   var queryDaily = {
     start: startOfYesterday.toJSON(),
-    //start: startWeekly.toJSON(),
     end: now.toJSON(),
     interval: 300,
-    //limit: 288,
     limit: 1000,
   };
-
 
   var queryWeekly = {
     start: startWeekly.toJSON(),
@@ -188,14 +183,10 @@
     limit: 1000,
   };
 
-
   xively.datastream.history( "302281936", "PoolTemperature", queryDaily, loadData);
   xively.datastream.history( "302281936", "ExteriorTemperature", queryDaily, loadData);
-//  xively.datastream.history( "302281936", "PoolTemperatureF", queryDaily, loadData);
-//  xively.datastream.history( "302281936", "ExteriorTemperatureF", queryDaily, loadData);
 
   function loadData(data) {
-    //var unit = data.unit.label;
     var filtedData = data.datapoints;
     for (var i=0; i < filtedData.length; i++ ) {
       var date = moment(filtedData[i].at);
@@ -212,21 +203,18 @@
             PoolF_serie_max = ((value * (9/5)) + 32);
           }
           PoolF_series[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
-          if (PoolC_series.length == OutC_series.length) {
+          if (PoolC_series.length == OutC_series.length - 1) {
+            PoolC_series.push({x: data.at.unix(), y:data.current_value});
             drawgraphifready(PoolC_series , OutC_series , (PoolC_serie_min < OutC_serie_min)?PoolC_serie_min:OutC_serie_min, (PoolC_serie_max > OutC_serie_max)?PoolC_serie_max:OutC_serie_max , "#chartC");
           }
-          if (PoolF_series.length == OutF_series.length) {
+          if (PoolF_series.length == OutF_series.length - 1) {
+            PoolF_series.push({x: data.at.unix(), y: ((data.current_value * (9/5)) + 32)});
+            pool.setValueAnimated( (data.current_value * (9/5)) + 32 );
+            pool.minValue=PoolF_serie_min;
+            pool.maxValue=PoolF_serie_max;
             drawgraphifready(PoolF_series , OutF_series , (PoolF_serie_min < OutF_serie_min)?PoolF_serie_min:OutF_serie_min, (PoolF_serie_max > OutF_serie_max)?PoolF_serie_max:OutF_serie_max ,"#chartF");
           }
           break;
-/*
-        case "PoolTemperatureF":
-          PoolF_series[i] = {x: date.unix(), y: value};
-          if (PoolF_series.length == OutF_series.length) {
-            drawgraphifready(PoolF_series , OutF_series , "#chartF");
-          }
-          break;
-*/
         case "ExteriorTemperature":
           OutC_series[i] = {x: date.unix(), y: value};
           if (value < OutC_serie_min) {
@@ -238,26 +226,77 @@
             OutF_serie_max = ((value * (9/5)) + 32);
           }
           OutF_series[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
-          if (PoolC_series.length == OutC_series.length) {
+          if (OutC_series.length == PoolC_series.length - 1) {
+            OutC_series.push({x: data.at.unix(), y:data.current_value});
+            out.setValueAnimated(data.current_value);
+            out.minValue=OutC_serie_min;
+            out.maxValue=OutC_serie_max;
             drawgraphifready(PoolC_series , OutC_series , (PoolC_serie_min < OutC_serie_min)?PoolC_serie_min:OutC_serie_min, (PoolC_serie_max > OutC_serie_max)?PoolC_serie_max:OutC_serie_max , "#chartC");
           }
-          if (PoolF_series.length == OutF_series.length) {
+          if (OutF_series.length == PoolF_series.length - 1) {
+            OutF_series.push({x: data.at.unix(), y: ((data.current_value * (9/5)) + 32)});
             drawgraphifready(PoolF_series , OutF_series , (PoolF_serie_min < OutF_serie_min)?PoolF_serie_min:OutF_serie_min, (PoolF_serie_max > OutF_serie_max)?PoolF_serie_max:OutF_serie_max , "#chartF");
           }
           break;
-/*
-        case "ExteriorTemperatureF":
-          OutF_series[i] = {x: date.unix(), y: value};
-          if (PoolF_series.length == OutF_series.length) {
-            drawgraphifready(PoolF_series , OutF_series , "#chartF");
-          }
-          break;
-*/
         default:
           console.log("default")
       }
     }
   }
+
+  var valGradF = new steelseries.gradientWrapper( 65,
+                                                  90,
+                                                  [ 0, 0.33, 0.66, 0.85, 1],
+                                                  [ new steelseries.rgbaColor(0, 0, 200, 1),
+                                                    new steelseries.rgbaColor(0, 200, 0, 1),
+                                                    new steelseries.rgbaColor(200, 200, 0, 1),
+                                                    new steelseries.rgbaColor(200, 0, 0, 1),
+                                                    new steelseries.rgbaColor(200, 0, 0, 1) ]);
+  var valGradC = new steelseries.gradientWrapper( 10,
+                                                  40,
+                                                  [ 0, 0.33, 0.66, 0.85, 1],
+                                                  [ new steelseries.rgbaColor(0, 0, 200, 1),
+                                                    new steelseries.rgbaColor(0, 200, 0, 1),
+                                                    new steelseries.rgbaColor(200, 200, 0, 1),
+                                                    new steelseries.rgbaColor(200, 0, 0, 1),
+                                                    new steelseries.rgbaColor(200, 0, 0, 1) ]);
+  pool = new steelseries.LinearBargraph('poolThermometerCanvas', {
+           width: 140,
+           height: 320,
+           valueGradient: valGradF,
+           useValueGradient: true,
+           minValue: 65,
+           maxValue: 90,
+           gaugeType: steelseries.GaugeType.TYPE2,
+           titleString: 'Piscine',
+           unitString: '°F',
+           thresholdVisible: false,
+           lcdVisible: true,
+           minMeasuredValueVisible: true,
+           maxMeasuredValueVisible: true,
+           //MinMeasuredValue: 65,
+           //MaxMeasuredValue: 90
+  });
+
+  out = new steelseries.LinearBargraph('outThermometerCanvas', {
+          width: 140,
+          height: 320,
+          valueGradient: valGradC,
+          useValueGradient: true,
+          minValue: 10,
+          maxValue: 40,
+          gaugeType: steelseries.GaugeType.TYPE2,
+          titleString: 'Extérieur',
+          unitString: '°C',
+          thresholdVisible: false,
+          lcdVisible: true,
+          minMeasuredValueVisible: true,
+          maxMeasuredValueVisible: true,
+          //MaxMeasuredValue: 40,
+          //MinMeasuredValue: 10
+    });
+
+
 
 /*
   xively.datastream.history( "302281936", "PoolTemperature", queryWeekly, loadDataW);
