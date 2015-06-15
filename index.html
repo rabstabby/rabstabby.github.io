@@ -145,67 +145,33 @@
       switch (data.id) {
         case "PoolTemperature":
           PoolC_series[i] = {x: date.unix(), y: value};
-          if (value < PoolC_serie_min) {
-            PoolC_serie_min = value;
-            PoolF_serie_min = convertToF(value);
-          }
-          if (value > PoolC_serie_max) {
-            PoolC_serie_max = value;
-            PoolF_serie_max = convertToF(value);
-          }
+          PoolC_serie_min = parseFloat(data.min_value);
+          PoolC_serie_max = parseFloat(data.max_value);
           PoolF_series[i] = {x: date.unix(), y: convertToF(value)};
+          PoolF_serie_min = convertToF(data.min_value);
+          PoolF_serie_max = convertToF(data.max_value);
+          pool.setValueAnimated( convertToF(data.current_value));
           break;
         case "ExteriorTemperature":
           OutC_series[i] = {x: date.unix(), y: value};
-          if (value < OutC_serie_min) {
-            OutC_serie_min = value;
-            OutF_serie_min = convertToF(value);
-          }
-          if (value > OutC_serie_max) {
-            OutC_serie_max = value;
-            OutF_serie_max = ((value * (9/5)) + 32);
-          }
+          OutC_serie_min = parseFloat(data.min_value);
+          OutC_serie_max = parseFloat(data.max_value);
           OutF_series[i] = {x: date.unix(), y: convertToF(value)};
+          OutF_serie_min = convertToF(data.min_value);
+          OutF_serie_max = convertToF(data.max_value);
+          out.setValueAnimated( parseFloat(data.current_value) );
           break;
         default:
           console.log("default")
       }
     }
-
-    switch (data.id) {
-      case "PoolTemperature":
-        if (parseFloat(data.current_value) < PoolC_serie_min) {
-          PoolC_serie_min = parseFloat(data.current_value);
-          PoolF_serie_min = convertToF(data.current_value);
-        }
-        if (parseFloat(data.current_value) > PoolC_serie_max) {
-          PoolC_serie_max = parseFloat(data.current_value);
-          PoolF_serie_max = convertToF(data.current_value);
-        }
-        pool.setValueAnimated( convertToF(data.current_value));
-        break;
-      case "ExteriorTemperature":
-        if (parseFloat(data.current_value) < OutC_serie_min) {
-          OutC_serie_min = parseFloat(data.current_value);
-          OutF_serie_min = convertToF(data.current_value);
-        }
-        if (parseFloat(data.current_value) > OutC_serie_max) {
-          OutC_serie_max = parseFloat(data.current_value);
-          OutF_serie_max = convertToF(data.current_value);
-        }
-        out.setValueAnimated( parseFloat(data.current_value) );
-        break;
-      default:
-        console.log("default")
-      }
-      if (PoolC_series.length == OutC_series.length) {
+    if (PoolC_series.length == OutC_series.length) {
         drawgraphifready(PoolC_series , OutC_series , (PoolC_serie_min < OutC_serie_min)?PoolC_serie_min:OutC_serie_min, (PoolC_serie_max > OutC_serie_max)?PoolC_serie_max:OutC_serie_max , "#chartC");
       }
       if (PoolF_series.length == OutF_series.length) {
         drawgraphifready(PoolF_series , OutF_series , (PoolF_serie_min < OutF_serie_min)?PoolF_serie_min:OutF_serie_min, (PoolF_serie_max > OutF_serie_max)?PoolF_serie_max:OutF_serie_max ,"#chartF");
       }
   }
-
 
   xively.datastream.history( "302281936", "PoolTemperature", queryWeekly, loadDataW);
   xively.datastream.history( "302281936", "ExteriorTemperature", queryWeekly, loadDataW);
@@ -218,57 +184,24 @@
       switch (data.id) {
         case "PoolTemperature":
           PoolC_seriesW[i] = {x: date.unix(), y: value};
-          if (value < PoolC_serieW_min) {
-            PoolC_serieW_min = value;
-            PoolF_serieW_min = convertToF(value);
-          }
-          if (value > PoolC_serieW_max) {
-            PoolC_serieW_max = value;
-            PoolF_serieW_max = convertToF(value);
-          }
+          PoolC_serieW_min = parseFloat(data.min_value);
+          PoolC_serieW_max = parseFloat(data.max_value);
           PoolF_seriesW[i] = {x: date.unix(), y: convertToF(value)};
+          PoolF_serieW_min = convertToF(data.min_value);
+          PoolF_serieW_max = convertToF(data.max_value);
           break;
         case "ExteriorTemperature":
           OutC_seriesW[i] = {x: date.unix(), y: value};
-          if (value < OutC_serieW_min) {
-            OutC_serieW_min = value;
-            OutF_serieW_min = convertToF(value);
-          }
-          if (value > OutC_serieW_max) {
-            OutC_serieW_max = value;
-            OutF_serieW_max = convertToF(value);
-          }
+          OutC_serieW_min = parseFloat(data.min_value);
+          OutC_serieW_max = parseFloat(data.max_value);
           OutF_seriesW[i] = {x: date.unix(), y: convertToF(value)};
+          OutF_serieW_min = convertToF(data.min_value);
+          OutF_serieW_max = convertToF(data.max_value);
           break;
         default:
           console.log("default")
       }
     }
-
-    switch (data.id) {
-      case "PoolTemperature":
-        if (parseFloat(data.current_value) < PoolC_serieW_min) {
-          PoolC_serieW_min = parseFloat(data.current_value);
-          PoolF_serieW_min = convertToF(data.current_value);
-        }
-        if (parseFloat(data.current_value) > PoolC_serieW_max) {
-          PoolC_serieW_max = parseFloat(data.current_value);
-          PoolF_serieW_max = convertToF(data.current_value);
-        }
-        break;
-      case "ExteriorTemperature":
-        if (parseFloat(data.current_value) < OutC_serieW_min) {
-          OutC_serieW_min = parseFloat(data.current_value);
-          OutF_serieW_min = convertToF(data.current_value);
-        }
-        if (parseFloat(data.current_value) > OutC_serieW_max) {
-          OutC_serieW_max = parseFloat(data.current_value);
-          OutF_serieW_max = convertToF(data.current_value);
-        }
-        break;
-      default:
-        console.log("default")
-      }
       if (PoolC_seriesW.length == OutC_seriesW.length) {
         drawgraphifready(PoolC_seriesW , OutC_seriesW , (PoolC_serieW_min < OutC_serieW_min)?PoolC_serieW_min:OutC_serieW_min, (PoolC_serieW_max > OutC_serieW_max)?PoolC_serieW_max:OutC_serieW_max , "#chartCW");
       }
