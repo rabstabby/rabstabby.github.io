@@ -250,15 +250,6 @@
             PoolF_serie_max = ((value * (9/5)) + 32);
           }
           PoolF_series[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
-          if (PoolC_series.length == OutC_series.length) {
-            //PoolC_series.push({x: moment(data.at).unix(), y:parseFloat(data.current_value)});
-            drawgraphifready(PoolC_series , OutC_series , (PoolC_serie_min < OutC_serie_min)?PoolC_serie_min:OutC_serie_min, (PoolC_serie_max > OutC_serie_max)?PoolC_serie_max:OutC_serie_max , "#chartC");
-          }
-          if (PoolF_series.length == OutF_series.length) {
-            //PoolF_series.push({x: moment(data.at).unix(), y: ((parseFloat(data.current_value) * (9/5)) + 32)});
-            pool.setValueAnimated( (parseFloat(data.current_value) * (9/5)) + 32 );
-            drawgraphifready(PoolF_series , OutF_series , (PoolF_serie_min < OutF_serie_min)?PoolF_serie_min:OutF_serie_min, (PoolF_serie_max > OutF_serie_max)?PoolF_serie_max:OutF_serie_max ,"#chartF");
-          }
           break;
         case "ExteriorTemperature":
           OutC_series[i] = {x: date.unix(), y: value};
@@ -285,6 +276,41 @@
           console.log("default")
       }
     }
+
+    switch (data.id) {
+      case "PoolTemperature":
+        PoolC_series.push({x: moment(data.at).unix(), y:parseFloat(data.current_value)});
+        PoolF_series.push({x: moment(data.at).unix(), y: ((parseFloat(data.current_value) * (9/5)) + 32)});
+        if (parseFloat(data.current_value) < PoolC_serie_min) {
+          PoolC_serie_min = parseFloat(data.current_value);
+          PoolF_serie_min = ((parseFloat(data.current_value) * (9/5)) + 32);
+        }
+        if (parseFloat(data.current_value) > PoolC_serie_max) {
+          PoolC_serie_max = parseFloat(data.current_value);
+          PoolF_serie_max = ((parseFloat(data.current_value) * (9/5)) + 32);
+        }
+        pool.setValueAnimated( (parseFloat(data.current_value) * (9/5)) + 32 );
+      case "ExteriorTemperature":
+        OutC_series.push({x: moment(data.at).unix(), y:parseFloat(data.current_value)});
+        OutF_series.push({x: moment(data.at).unix(), y: ((parseFloat(data.current_value) * (9/5)) + 32)});
+        if (parseFloat(data.current_value) < OutC_serie_min) {
+          OutC_serie_min = parseFloat(data.current_value);
+          OutF_serie_min = ((parseFloat(data.current_value) * (9/5)) + 32);
+        }
+        if (parseFloat(data.current_value) > OutC_serie_max) {
+          OutC_serie_max = parseFloat(data.current_value);
+          OutF_serie_max = ((parseFloat(data.current_value) * (9/5)) + 32);
+        }
+        out.setValueAnimated( parseFloat(data.current_value) );
+      default:
+        console.log("default")
+      }
+      if (PoolC_series.length == OutC_series.length) {
+        drawgraphifready(PoolC_series , OutC_series , (PoolC_serie_min < OutC_serie_min)?PoolC_serie_min:OutC_serie_min, (PoolC_serie_max > OutC_serie_max)?PoolC_serie_max:OutC_serie_max , "#chartC");
+      }
+      if (PoolF_series.length == OutF_series.length) {
+        drawgraphifready(PoolF_series , OutF_series , (PoolF_serie_min < OutF_serie_min)?PoolF_serie_min:OutF_serie_min, (PoolF_serie_max > OutF_serie_max)?PoolF_serie_max:OutF_serie_max ,"#chartF");
+      }
   }
 
 /*
