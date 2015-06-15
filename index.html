@@ -20,7 +20,9 @@
 <script src="vendor/d3.layout.min.js"></script>
 <script src="vendor/moment.min.js"></script>
 
+
 <script src="http://code.shutterstock.com/rickshaw/src/js/Rickshaw.Fixtures.Time.Local.js"></script>
+<script src="http://code.shutterstock.com/rickshaw/src/js/Rickshaw.Graph.Axis.Time.js"></script>
 <script src="http://code.shutterstock.com/rickshaw/src/js/Rickshaw.Graph.Smoother.js"></script>
 <script src="http://code.shutterstock.com/rickshaw/src/js/Rickshaw.Graph.RangeSlider.js"></script>
 <script src="http://code.shutterstock.com/rickshaw/src/js/Rickshaw.Graph.RangeSlider.Preview.js"></script>
@@ -259,14 +261,22 @@
       });
       xAxis.render();
 */
-
+/*
       var axes = new Rickshaw.Graph.Axis.Time( {
         graph: graph,
         ticksTreatment: ticksTreatment,
         timeFixture: new Rickshaw.Fixtures.Time.Local()
       });
       axes.render();
+*/
 
+var previewXAxis = new Rickshaw.Graph.Axis.Time({
+	graph: preview.previews[0],
+	timeFixture: new Rickshaw.Fixtures.Time.Local(),
+	ticksTreatment: ticksTreatment
+});
+
+previewXAxis.render();
 
 /*
       var xAxis = new Rickshaw.Graph.Axis.X({
