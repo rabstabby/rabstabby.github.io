@@ -279,8 +279,8 @@
 
     switch (data.id) {
       case "PoolTemperature":
-        PoolC_series.push({x: moment(data.at).unix() - 14100, y:parseFloat(data.current_value)});
-        PoolF_series.push({x: moment(data.at).unix() - 14100, y: ((parseFloat(data.current_value) * (9/5)) + 32)});
+        //PoolC_series.push({x: moment(data.at).unix() - 14100, y:parseFloat(data.current_value)});
+        //PoolF_series.push({x: moment(data.at).unix() - 14100, y: ((parseFloat(data.current_value) * (9/5)) + 32)});
         if (parseFloat(data.current_value) < PoolC_serie_min) {
           PoolC_serie_min = parseFloat(data.current_value);
           PoolF_serie_min = ((parseFloat(data.current_value) * (9/5)) + 32);
@@ -292,8 +292,8 @@
         pool.setValueAnimated( (parseFloat(data.current_value) * (9/5)) + 32 );
         break;
       case "ExteriorTemperature":
-        OutC_series.push({x: moment(data.at).unix() - 14100, y:parseFloat(data.current_value)});
-        OutF_series.push({x: moment(data.at).unix() - 14100, y: ((parseFloat(data.current_value) * (9/5)) + 32)});
+        //OutC_series.push({x: moment(data.at).unix() - 14100, y:parseFloat(data.current_value)});
+        //OutF_series.push({x: moment(data.at).unix() - 14100, y: ((parseFloat(data.current_value) * (9/5)) + 32)});
         if (parseFloat(data.current_value) < OutC_serie_min) {
           OutC_serie_min = parseFloat(data.current_value);
           OutF_serie_min = ((parseFloat(data.current_value) * (9/5)) + 32);
