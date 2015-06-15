@@ -239,13 +239,24 @@
       var hoverDetail = new Rickshaw.Graph.HoverDetail( {
         graph: graph
       } );
-
+/*
       var axes = new Rickshaw.Graph.Axis.Time( {
         graph: graph,
         //ticksTreatment: ticksTreatment,
-        timeFixture: new Rickshaw.Fixtures.Time.Local()
+        //timeFixture: new Rickshaw.Fixtures.Time.Local()
+        tickFormat: function(x){
+          return new Date(x * 1000).toLocaleTimeString();
+        }
       });
       axes.render();
+*/
+      var xAxis = new Rickshaw.Graph.Axis.X({
+        graph: graph,
+        tickFormat: function(x){
+          return new Date(x * 1000).toLocateTimeString();
+        }
+      })
+      xAxis.render();
 
       var yAxis = new Rickshaw.Graph.Axis.Y({
         graph: graph
