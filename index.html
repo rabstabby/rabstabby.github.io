@@ -257,12 +257,12 @@
             PoolF_serie_max = ((value * (9/5)) + 32);
           }
           PoolF_series[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
-          if (PoolC_series.length == OutC_series.length - 1) {
-            PoolC_series.push({x: moment(data.at).unix(), y:parseFloat(data.current_value)});
+          if (PoolC_series.length == OutC_series.length) {
+            //PoolC_series.push({x: moment(data.at).unix(), y:parseFloat(data.current_value)});
             drawgraphifready(PoolC_series , OutC_series , (PoolC_serie_min < OutC_serie_min)?PoolC_serie_min:OutC_serie_min, (PoolC_serie_max > OutC_serie_max)?PoolC_serie_max:OutC_serie_max , "#chartC");
           }
-          if (PoolF_series.length == OutF_series.length - 1) {
-            PoolF_series.push({x: moment(data.at).unix(), y: ((parseFloat(data.current_value) * (9/5)) + 32)});
+          if (PoolF_series.length == OutF_series.length) {
+            //PoolF_series.push({x: moment(data.at).unix(), y: ((parseFloat(data.current_value) * (9/5)) + 32)});
             drawgraphifready(PoolF_series , OutF_series , (PoolF_serie_min < OutF_serie_min)?PoolF_serie_min:OutF_serie_min, (PoolF_serie_max > OutF_serie_max)?PoolF_serie_max:OutF_serie_max ,"#chartF");
           }
           break;
@@ -277,12 +277,12 @@
             OutF_serie_max = ((value * (9/5)) + 32);
           }
           OutF_series[i] = {x: date.unix(), y: ((value * (9/5)) + 32)};
-          if (OutC_series.length == PoolC_series.length - 1) {
-            OutC_series.push({x: moment(data.at).unix(), y:parseFloat(data.current_value)});
+          if (OutC_series.length == PoolC_series.length) {
+            //OutC_series.push({x: moment(data.at).unix(), y:parseFloat(data.current_value)});
             drawgraphifready(PoolC_series , OutC_series , (PoolC_serie_min < OutC_serie_min)?PoolC_serie_min:OutC_serie_min, (PoolC_serie_max > OutC_serie_max)?PoolC_serie_max:OutC_serie_max , "#chartC");
           }
-          if (OutF_series.length == PoolF_series.length - 1) {
-            OutF_series.push({x: moment(data.at).unix(), y: ((parseFloat(data.current_value) * (9/5)) + 32)});
+          if (OutF_series.length == PoolF_series.length) {
+            //OutF_series.push({x: moment(data.at).unix(), y: ((parseFloat(data.current_value) * (9/5)) + 32)});
             drawgraphifready(PoolF_series , OutF_series , (PoolF_serie_min < OutF_serie_min)?PoolF_serie_min:OutF_serie_min, (PoolF_serie_max > OutF_serie_max)?PoolF_serie_max:OutF_serie_max , "#chartF");
           }
           break;
