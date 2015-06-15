@@ -270,13 +270,13 @@
       axes.render();
 */
 
-var previewXAxis = new Rickshaw.Graph.Axis.Time({
-	graph: preview.previews[0],
-	timeFixture: new Rickshaw.Fixtures.Time.Local(),
-	ticksTreatment: ticksTreatment
-});
+var xAxis = new Rickshaw.Graph.Axis.Time( {
+	graph: graph,
+	ticksTreatment: ticksTreatment,
+	timeFixture: new Rickshaw.Fixtures.Time.Local()
+} );
 
-previewXAxis.render();
+xAxis.render();
 
 /*
       var xAxis = new Rickshaw.Graph.Axis.X({
