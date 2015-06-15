@@ -241,17 +241,31 @@
       var hoverDetail = new Rickshaw.Graph.HoverDetail( {
         graph: graph
       } );
+      
+      var unit = {}
+        unit.formatTime = function(d) {
+        return d.toUTCString().match(/(\d+:\d+):/)[1];
+      };
+        unit.formatter = function(d) { return this.formatTime(d)};
+        unit.name = "5 minute";
+        unit.seconds = 300;
+      var xAxis = new Rickshaw.Graph.Axis.Time({
+        graph: graph,
+        timeUnit:unit,
+        ticksTreatment: ticksTreatment,
+        timeFixture: new Rickshaw.Fixtures.Time.Local()
+      });
+      xAxix.render();
+
 /*
       var axes = new Rickshaw.Graph.Axis.Time( {
         graph: graph,
-        //ticksTreatment: ticksTreatment,
-        //timeFixture: new Rickshaw.Fixtures.Time.Local()
-        tickFormat: function(x){
-          return new Date(x * 1000).toLocaleTimeString();
-        }
+        ticksTreatment: ticksTreatment,
+        timeFixture: new Rickshaw.Fixtures.Time.Local()
       });
       axes.render();
 */
+/*
       var xAxis = new Rickshaw.Graph.Axis.X({
         graph: graph,
         tickFormat: function(x){
@@ -259,6 +273,7 @@
         }
       })
       xAxis.render();
+*/
 
       var yAxis = new Rickshaw.Graph.Axis.Y({
         graph: graph
