@@ -87,15 +87,15 @@
                                            height: 320,
                                            valueGradient: valGradF,
                                            useValueGradient: true,
-                                           //minValue: 65,
+                                           minValue: 65,
                                            maxValue: 90,
                                            gaugeType: steelseries.GaugeType.TYPE2,
                                            titleString: 'Piscine',
                                            unitString: '°F',
                                            thresholdVisible: false,
                                            lcdVisible: true,
-                                           minMeasuredValueVisible: true,
-                                           maxMeasuredValueVisible: true,
+                                           //minMeasuredValueVisible: true,
+                                           //maxMeasuredValueVisible: true,
     });
 
     out = new steelseries.LinearBargraph( 'outThermometerCanvas', {
@@ -103,15 +103,15 @@
                                            height: 320,
                                            valueGradient: valGradC,
                                            useValueGradient: true,
-                                           //minValue: 10,
+                                           minValue: 10,
                                            maxValue: 40,
                                            gaugeType: steelseries.GaugeType.TYPE2,
                                            titleString: 'Extérieur',
                                            unitString: '°C',
                                            thresholdVisible: false,
                                            lcdVisible: true,
-                                           minMeasuredValueVisible: true,
-                                           maxMeasuredValueVisible: true,
+                                           //minMeasuredValueVisible: true,
+                                           //maxMeasuredValueVisible: true,
     });
 
     var queryDaily = {
@@ -147,8 +147,8 @@
             PoolF_serie_min = convertToF(data.min_value);
             PoolF_serie_max = convertToF(data.max_value);
             pool.setValueAnimated(convertToF(data.current_value));
-            pool.setMinMeasuredValue(convertToF(data.min_value));
-            pool.setMaxMeasuredValue(convertToF(data.max_value));
+            //pool.setMinMeasuredValue(convertToF(data.min_value));
+            //pool.setMaxMeasuredValue(convertToF(data.max_value));
             break;
           case "ExteriorTemperature":
             OutC_series[i] = {x: date.unix(), y: value};
@@ -158,8 +158,8 @@
             OutF_serie_min = convertToF(data.min_value);
             OutF_serie_max = convertToF(data.max_value);
             out.setValueAnimated(parseFloat(data.current_value));
-            out.setMinMeasuredValue(data.min_value);
-            out.setMaxMeasuredValue(data.max_value);
+            //out.setMinMeasuredValue(data.min_value);
+            //out.setMaxMeasuredValue(data.max_value);
             break;
           default:
             console.log("default")
