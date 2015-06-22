@@ -60,7 +60,7 @@ ul li:hover {
 }
 
 .user {
-  width:25%;
+  width:15%;
 }
 
 .tweet {
@@ -76,11 +76,11 @@ ul li:hover {
 }
 
 .user a {
- width: 50px;
+ width: 48px;
 }
 
 .user span span {
-  width:50px;
+  width:48px;
   display:block;
   margin-top:10px;
 }
@@ -105,8 +105,8 @@ ul li:hover {
 }
 
 .media img {
-  max-width:250px;
-  max-height:250px;
+  max-width:48px;
+  max-height:48px;
 }
 
 #linkage {
