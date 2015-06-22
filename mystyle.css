@@ -76,11 +76,11 @@ ul li:hover {
 }
 
 .user a {
- width: 100px;
+ width: 50px;
 }
 
 .user span span {
-  width:100px;
+  width:50px;
   display:block;
   margin-top:10px;
 }
