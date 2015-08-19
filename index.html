@@ -165,10 +165,10 @@
             console.log("default")
         }
       }
-      if (PoolC_series.length == OutC_series.length) {
+      if ((PoolC_series.length > 0) && (OutC_series.length > 0)) {
         drawgraphifready(PoolC_series , OutC_series , (PoolC_serie_min < OutC_serie_min)?PoolC_serie_min:OutC_serie_min, (PoolC_serie_max > OutC_serie_max)?PoolC_serie_max:OutC_serie_max , "#chartC");
       }
-      if (PoolF_series.length == OutF_series.length) {
+      if ((PoolF_series.length > 0 ) && (OutF_series.length > 0)) {
         drawgraphifready(PoolF_series , OutF_series , (PoolF_serie_min < OutF_serie_min)?PoolF_serie_min:OutF_serie_min, (PoolF_serie_max > OutF_serie_max)?PoolF_serie_max:OutF_serie_max ,"#chartF");
       }
     }
@@ -202,10 +202,10 @@
             console.log("default")
         }
       }
-      if (PoolC_seriesW.length == OutC_seriesW.length) {
+      if ((PoolC_seriesW.length > 0) && (OutC_seriesW.length > 0)) {
         drawgraphifready(PoolC_seriesW , OutC_seriesW , (PoolC_serieW_min < OutC_serieW_min)?PoolC_serieW_min:OutC_serieW_min, (PoolC_serieW_max > OutC_serieW_max)?PoolC_serieW_max:OutC_serieW_max , "#chartCW");
       }
-      if (PoolF_seriesW.length == OutF_seriesW.length) {
+      if ((PoolF_seriesW.length > 0) && (OutF_seriesW.length > 0)) {
         drawgraphifready(PoolF_seriesW , OutF_seriesW , (PoolF_serieW_min < OutF_serieW_min)?PoolF_serieW_min:OutF_serieW_min, (PoolF_serieW_max > OutF_serieW_max)?PoolF_serieW_max:OutF_serieW_max ,"#chartFW");
       }
     }
