@@ -120,3 +120,11 @@ ul li:hover {
   width:10%;
   font-family:arial;
 }
+
+.c3 svg {
+        font: bold 20px sans-serif;
+}
+.c3-chart-line path {
+  stroke-width: 5px;
+  stroke-linecap: round;
+}
