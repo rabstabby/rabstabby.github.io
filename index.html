@@ -35,24 +35,32 @@
     <!--<td><canvas id=outThermometerCanvas width=200 height=200>No canvas in your browser...sorry...</canvas></td>-->
     <td width="5%">&nbsp;</td>
   </tr>
-
 </table>
 
-<div align="center" style="vertical-align:bottom">
-
-<table width="90%">
+<center><h2>La derni&egrave;re semaine</h2></center>
+<table width="100%">
   <tr>
-    <td>
-      <div align="center" style="vertical-align:bottom">
-      <h2>Tweets</h2>
-        <div id="patpaulpoolbot_tweets"></div>
-        <a class="twitter-timeline"  href="https://twitter.com/patpaulpoolbot" data-widget-id="613013474453622784">Tweets de @patpaulpoolbot</a>
-            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-    </td>
+    <td width="5%">&nbsp;</td>
+    <td><div id="chartFW"></div></td>
+    <td width="5%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="5%">&nbsp;</td>
+    <td><div id="chartCW"></div></td>
+    <td width="5%">&nbsp;</td>
   </tr>
 </table>
 
-
+<center><h2>Tweets</h2></center>
+<table width="100%">
+  <tr>
+    <td align="center">
+      <div id="patpaulpoolbot_tweets"></div>
+      <a class="twitter-timeline"  href="https://twitter.com/patpaulpoolbot" data-widget-id="613013474453622784">Tweets de @patpaulpoolbot</a>
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    </td>
+  </tr>
+</table>
 
 <script type="text/javascript">
 var __eon_pubnub = new PubNub({
@@ -60,7 +68,7 @@ var __eon_pubnub = new PubNub({
 });
 var __eon_cols = ["exterior","pool"]; 
 var __eon_labels = {}; 
-chart = eon.chart({
+chartF = eon.chart({
   pubnub: __eon_pubnub,
   channels: ["farenheit2"],
   history: true,
@@ -128,6 +136,215 @@ chart = eon.chart({
     };
   }
 });
+
+chartC = eon.chart({
+  pubnub: __eon_pubnub,
+  channels: ["celcius2"],
+  history: true,
+  flow: true,
+  rate: 300000,
+  limit: 288,
+  generate: {
+    bindto: "#chartC",
+    data: {
+      colors: {"exterior":"#0000FF","pool":"#FF0000"},
+      type: "spline"
+    },
+    transition: {
+      duration: 250
+    },
+    axis: {
+      x: {
+        //type: 'timeseries',
+        //tick: {
+        //  format: '%H:%m:%S'
+          //fit: true
+        //},
+        label: {
+          text: 'temps'
+        }
+      },
+      y: {
+        label: {
+          text: '°C',
+          position: 'outer-middle'
+        },
+        tick: {
+          format: function (d) {
+            var df = Number( d3.format('.2f')(d) );
+            return df;
+          }
+        }
+      }
+    },
+    grid: {
+      x: {
+        show: false 
+      },
+      y: {
+        show: false 
+      }
+    },
+    tooltip: {
+     show: true
+    },
+    point: {
+      show: false
+    }
+  },
+  transform: function(message) {
+    var message = eon.c.flatten(message.eon);
+    var o = {};
+    for(index in message) {
+      if(__eon_cols.indexOf(index) > -1){
+        o[__eon_labels[index] || index] = message[index];
+      }
+    }
+    return {
+      eon: o
+    };
+  }
+});
+
+chartFW = eon.chart({
+  pubnub: __eon_pubnub,
+  channels: ["farenheit2"],
+  history: true,
+  flow: true,
+  rate: 300000,
+  limit: 2016,
+  generate: {
+    bindto: "#chartFW",
+    data: {
+      colors: {"exterior":"#0000FF","pool":"#FF0000"},
+      type: "spline"
+    },
+    transition: {
+      duration: 250
+    },
+    axis: {
+      x: {
+        //type: 'timeseries',
+        //tick: {
+        //  format: '%H:%m:%S'
+          //fit: true
+        //},
+        label: {
+          text: 'temps'
+        }
+      },
+      y: {
+        label: {
+          text: '°F',
+          position: 'outer-middle'
+        },
+        tick: {
+          format: function (d) {
+            var df = Number( d3.format('.2f')(d) );
+            return df;
+          }
+        }
+      }
+    },
+    grid: {
+      x: {
+        show: false 
+      },
+      y: {
+        show: false 
+      }
+    },
+    tooltip: {
+     show: true
+    },
+    point: {
+      show: false
+    }
+  },
+  transform: function(message) {
+    var message = eon.c.flatten(message.eon);
+    var o = {};
+    for(index in message) {
+      if(__eon_cols.indexOf(index) > -1){
+        o[__eon_labels[index] || index] = message[index];
+      }
+    }
+    return {
+      eon: o
+    };
+  }
+});
+
+chartCW = eon.chart({
+  pubnub: __eon_pubnub,
+  channels: ["celcius2"],
+  history: true,
+  flow: true,
+  rate: 300000,
+  limit: 2016,
+  generate: {
+    bindto: "#chartCW",
+    data: {
+      colors: {"exterior":"#0000FF","pool":"#FF0000"},
+      type: "spline"
+    },
+    transition: {
+      duration: 250
+    },
+    axis: {
+      x: {
+        //type: 'timeseries',
+        //tick: {
+        //  format: '%H:%m:%S'
+          //fit: true
+        //},
+        label: {
+          text: 'temps'
+        }
+      },
+      y: {
+        label: {
+          text: '°C',
+          position: 'outer-middle'
+        },
+        tick: {
+          format: function (d) {
+            var df = Number( d3.format('.2f')(d) );
+            return df;
+          }
+        }
+      }
+    },
+    grid: {
+      x: {
+        show: false
+      },
+      y: {
+        show: false
+      }
+    },
+    tooltip: {
+     show: true
+    },
+    point: {
+      show: false
+    }
+  },
+  transform: function(message) {
+    var message = eon.c.flatten(message.eon);
+    var o = {};
+    for(index in message) {
+      if(__eon_cols.indexOf(index) > -1){
+        o[__eon_labels[index] || index] = message[index];
+      }
+    }
+    return {
+      eon: o
+    };
+  }
+});
+
+
 </script>
 
 
