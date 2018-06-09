@@ -125,6 +125,6 @@ ul li:hover {
         font: bold 20px sans-serif;
 }
 .c3-chart-line path {
-  stroke-width: 5px;
+  stroke-width: 3px;
   stroke-linecap: round;
 }
